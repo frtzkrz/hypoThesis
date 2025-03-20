@@ -2,25 +2,24 @@
 # in the pipeline file `dvc.yaml`.
 general:
   data: data/cleaned.csv
-  samples: models/samples.hdf5
-  risks: models/risks.hdf5
-  prevalences: models/prevalences.hdf5
-  metrics: metrics.json
-  plots_dir: plots
+  samples: simple_graph/B/samples.hdf5
+  risks: simple_graph/B/risks.hdf5
+  prevalences: simple_graph/B/prevalences.hdf5
+  metrics: simple_graph/B/metrics.json
+  plots_dir: simple_graph/B/plots
+
 
 ########################################################################################
 # This dictionary defines which LNLs are present in the
 # graph and how they are connected.
 graph:
   tumor:
-    primary: [I, II, III, IV, V, VII]
+    primary: [II, III]
   lnl:
-    I: []
-    II: []
-    III: [IV]
-    IV: []
-    V: []
-    VII: []
+
+    II: [III]
+    III: []
+
 
 ########################################################################################
 # Below are some parameters necessary for the model setup:
@@ -180,4 +179,35 @@ risks: []
 # prevalence of a certain pattern of involvement for a defined
 # diagnostic modality. It can, however, be compared to the prevalence
 # in the data.
-prevalences: []
+prevalences: 
+- name: healthy/early
+  pattern: {"ipsi": {"II": False, "III": False}}
+  t_stage: early
+
+- name: healthy/late
+  pattern: {"ipsi": {"II": False, "III": False}}
+  t_stage: late
+
+- name: II/early
+  pattern: {"ipsi": {"II": True, "III": False}}
+  t_stage: early
+
+- name: II/late
+  pattern: {"ipsi": {"II": True, "III": False}}
+  t_stage: late
+
+- name: III/early
+  pattern: {"ipsi": {"II": False, "III": True}}
+  t_stage: early
+
+- name: III/late
+  pattern: {"ipsi": {"II": False, "III": True}}
+  t_stage: late
+
+- name: both/early
+  pattern: {"ipsi": {"II": True, "III": True}}
+  t_stage: early
+
+- name: both/late
+  pattern: {"ipsi": {"II": True, "III": True}}
+  t_stage: late
