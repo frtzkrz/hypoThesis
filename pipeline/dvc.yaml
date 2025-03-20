@@ -9,13 +9,11 @@ stages:
     - output: data/joined.csv
     cmd: >
       lyscripts data join
-      --inputs data/2021-usz-oropharynx.csv data/2021-clb-oropharynx.csv data/2023-isb-multisite.csv data/2023-clb-multisite.csv
+      --inputs data/usz_hypopharynx.csv data/umcg_hypopharynx.csv
       --output ${output}
     deps:
-    - data/2021-usz-oropharynx.csv
-    - data/2021-clb-oropharynx.csv
-    - data/2023-isb-multisite.csv
-    - data/2023-clb-multisite.csv
+    - data/usz_hypopharynx.csv
+    - data/umcg_hypopharynx.csv
     outs:
     - ${output}
 
@@ -37,21 +35,6 @@ stages:
     outs:
     - ${output}
 
-  filter:
-    wdir: ..
-    desc:
-      Select only those patients that have oropharyngeal SCC, because in the new
-      datasets (the 2023 ones) we also have other subsites.
-    cmd: >
-      python scripts/filter.py
-      --input data/enhanced.csv
-      --output data/filtered.csv
-    deps:
-      - scripts/filter.py
-      - data/enhanced.csv
-    outs:
-      - data/filtered.csv
-
   clean:
     wdir: ..
     desc:
@@ -60,7 +43,7 @@ stages:
       data for the `Unilateral` model class expect only two header rows, while
       instances of the classes `Bilateral` and `MidlineBilateral` expect three.
     vars:
-    - input: data/filtered.csv
+    - input: data/enhanced.csv
     cmd: lyscripts data clean ${input} ${general.data}
     deps:
     - ${input}
@@ -78,6 +61,7 @@ stages:
     cmd: >
       lyscripts sample ${general.data} ${general.samples}
       --plots ${general.plots_dir}/sampling
+      --pools 8
       --ti
       ${inference_modalities}
     deps:
@@ -108,7 +92,6 @@ stages:
     cmd: >
       lyscripts evaluate ${general.data} ${general.samples}
       --metrics ${general.metrics}
-      --plots ${general.plots_dir}/ti/accuracies.csv
     params:
     - graph
     - model
@@ -117,10 +100,6 @@ stages:
     deps:
     - ${general.data}
     - ${general.samples}
-    plots:
-    - ${general.plots_dir}/ti/accuracies.csv:
-        x: β
-        y: accuracy
     metrics:
     - ${general.metrics}
 
@@ -137,41 +116,41 @@ stages:
     - ${general.plots_dir}/corner.png
     - ${general.plots_dir}/corner.svg
 
-  # predict-risks:
-  #   wdir: ..
-  #   desc:
-  #     Compute risk predictions for all the scenarios defined in the `params.yaml`
-  #     file and store them in an HDF5 file.
-  #   cmd: >
-  #     lyscripts predict risks
-  #     ${general.samples}
-  #     ${general.risks}
-  #   deps:
-  #   - ${general.samples}
-  #   params:
-  #   - graph
-  #   - model
-  #   - risks
-  #   outs:
-  #   - ${general.risks}
+  predict-risks:
+    wdir: ..
+    desc:
+      Compute risk predictions for all the scenarios defined in the `params.yaml`
+      file and store them in an HDF5 file.
+    cmd: >
+      lyscripts predict risks
+      ${general.samples}
+      ${general.risks}
+    deps:
+    - ${general.samples}
+    params:
+    - graph
+    - model
+    - risks
+    outs:
+    - ${general.risks}
 
-  # predict-prevalences:
-  #   wdir: ..
-  #   desc:
-  #     Compute prevalences for all the scenarios defined in the `params.yaml`
-  #     file, compare it to the data prevalence of the same scenario and store the
-  #     results in an HDF5 file.
-  #   cmd: >
-  #     lyscripts predict prevalences
-  #     ${general.samples}
-  #     ${general.data}
-  #     ${general.prevalences}
-  #   deps:
-  #   - ${general.samples}
-  #   - ${general.data}
-  #   params:
-  #   - graph
-  #   - model
-  #   - prevalences
-  #   outs:
-  #   - ${general.prevalences}
+  predict-prevalences:
+    wdir: ..
+    desc:
+      Compute prevalences for all the scenarios defined in the `params.yaml`
+      file, compare it to the data prevalence of the same scenario and store the
+      results in an HDF5 file.
+    cmd: >
+      lyscripts predict prevalences
+      ${general.samples}
+      ${general.data}
+      ${general.prevalences}
+    deps:
+    - ${general.samples}
+    - ${general.data}
+    params:
+    - graph
+    - model
+    - prevalences
+    outs:
+    - ${general.prevalences}

@@ -1,36 +1,30 @@
 schema: '2.0'
 stages:
   join:
-    cmd: "lyscripts data join --inputs data/2021-usz-oropharynx.csv data/2021-clb-oropharynx.csv
-      data/2023-isb-multisite.csv data/2023-clb-multisite.csv --output data/joined.csv\n"
+    cmd: "lyscripts data join --inputs data/usz_hypopharynx.csv data/umcg_hypopharynx.csv
+      --output data/joined.csv\n"
     deps:
-    - path: data/2021-clb-oropharynx.csv
-      md5: d40c0a1ae967a6983d60a0a809cf3972
-      size: 92742
-    - path: data/2021-usz-oropharynx.csv
-      md5: 4c62057de32538d2274eaf7f2af0c759
-      size: 159482
-    - path: data/2023-clb-multisite.csv
+    - path: data/umcg_hypopharynx.csv
       hash: md5
-      md5: 9d72ee96af2c51033a2fb0bb8551e318
-      size: 123938
-    - path: data/2023-isb-multisite.csv
+      md5: cd8118b585c49966fbd82f8f15c89281
+      size: 74178
+    - path: data/usz_hypopharynx.csv
       hash: md5
-      md5: 569984943168f3a56d6ca58d0813dee2
-      size: 204323
+      md5: a4ed8b94dd6ae0ffca42260917005cd3
+      size: 73583
     outs:
     - path: data/joined.csv
       hash: md5
-      md5: 3214cee7533ee9b99d6ff78df65d9ab3
-      size: 807386
+      md5: 68bbd04da08e9bddb1761d09dcfe3391
+      size: 183027
   enhance:
     cmd: "lyscripts data enhance data/joined.csv data/enhanced.csv --modalities CT
       MRI PET FNA diagnostic_consensus pathology pCT\n"
     deps:
     - path: data/joined.csv
       hash: md5
-      md5: 3214cee7533ee9b99d6ff78df65d9ab3
-      size: 807386
+      md5: 68bbd04da08e9bddb1761d09dcfe3391
+      size: 183027
     params:
       params.yaml:
         modalities:
@@ -61,50 +55,41 @@ stages:
     outs:
     - path: data/enhanced.csv
       hash: md5
-      md5: c47cda3386f87dd144743b5d4d0bcc2a
-      size: 976692
+      md5: ce58ed38b233179d31e7e647f0d9edce
+      size: 221916
   clean:
-    cmd: lyscripts data clean data/filtered.csv data/cleaned.csv
+    cmd: lyscripts data clean data/enhanced.csv data/cleaned.csv
     deps:
-    - path: data/filtered.csv
+    - path: data/enhanced.csv
       hash: md5
-      md5: de35d3fcd02a05fc39fe0afcc1becb6a
-      size: 529238
+      md5: ce58ed38b233179d31e7e647f0d9edce
+      size: 221916
     params:
       params.yaml:
         model.class: Unilateral
     outs:
     - path: data/cleaned.csv
       hash: md5
-      md5: 9e99529170c092774a0933c11fac75ec
-      size: 227786
+      md5: 83b733818f12b726245436b20f41ce8e
+      size: 81563
   sampling:
-    cmd: "lyscripts sample data/cleaned.csv models/samples.hdf5 --plots plots/sampling
-      --ti --modalities max_llh\n"
+    cmd: "lyscripts sample data/cleaned.csv simple_graph/A/samples.hdf5 --plots simple_graph/A/plots/sampling
+      --pools 8 --ti --modalities max_llh\n"
     deps:
     - path: data/cleaned.csv
       hash: md5
-      md5: 9e99529170c092774a0933c11fac75ec
-      size: 227786
+      md5: 83b733818f12b726245436b20f41ce8e
+      size: 81563
     params:
       params.yaml:
         graph:
           tumor:
             primary:
-            - I
             - II
             - III
-            - IV
-            - V
-            - VII
           lnl:
-            I: []
             II: []
-            III:
-            - IV
-            IV: []
-            V: []
-            VII: []
+            III: []
         modalities:
           CT:
           - 0.76
@@ -150,7 +135,7 @@ stages:
           - 0.0
           - 1.0076210988534706e-09
           - 3.224387516331105e-08
-          - 2.448519270213933e-07
+          - 2.448519270213932e-07
           - 1.031804005225953e-06
           - 3.148815933917096e-06
           - 7.835261664684588e-06
@@ -217,166 +202,74 @@ stages:
             trust_threshold: 30.0
             rel_acor_threshold: 0.075
     outs:
-    - path: models/samples.hdf5
+    - path: simple_graph/A/plots/sampling/accept_rates.csv
       hash: md5
-      md5: e57ceda4fe25f53fe1b4e0cd4c5df323
-      size: 104167864
-    - path: plots/sampling/accept_rates.csv
+      md5: b948bdd86d21cf73dcf4a95838a6e378
+      size: 2340
+    - path: simple_graph/A/plots/sampling/acor_times.csv
       hash: md5
-      md5: 4f9f9804e0b51e8178d5ef4f68a1a1d5
-      size: 2131
-    - path: plots/sampling/acor_times.csv
+      md5: b120563fa993ff1a6e1ecfff6bb72838
+      size: 2499
+    - path: simple_graph/A/samples.hdf5
       hash: md5
-      md5: 6b156fc49b297d5fa12bcf17fc71af13
-      size: 2458
+      md5: 21bbc5e14ca75dfe9abdab5b3bf18005
+      size: 23253464
   predict-risks:
-    cmd: "lyscripts predict risks models/samples.hdf5 models/risks.hdf5\n"
+    cmd: "lyscripts predict risks simple_graph/A/samples.hdf5 simple_graph/A/risks.hdf5\n"
     deps:
-    - path: models/samples.hdf5
-      md5: cf0603eb71eb87010494a1629f3c78ea
-      size: 4839888
+    - path: simple_graph/A/samples.hdf5
+      hash: md5
+      md5: 21bbc5e14ca75dfe9abdab5b3bf18005
+      size: 23253464
     params:
       params.yaml:
         graph:
           tumor:
             primary:
-            - I
             - II
             - III
-            - IV
-            - V
-            - VII
           lnl:
-            I: []
-            II:
-            - I
-            - III
-            - V
-            III:
-            - IV
-            - V
-            IV: []
-            V: []
-            VII: []
+            II: []
+            III: []
         model:
           first_binom_prob: 0.3
           max_t: 10
           t_stages:
           - early
           - late
-          class: MidlineBilateral
+          class: Unilateral
           kwargs:
             base_symmetric: false
             trans_symmetric: true
             use_mixing: true
-        risks:
-        - name: contra/III/N0/late/ext
-          involvement:
-            contra:
-              III: true
-          given_diagnosis:
-            ipsi:
-              I: false
-              II: false
-              III: false
-              IV: false
-              V: false
-              VII: false
-            contra:
-              I: false
-              II: false
-              III: false
-              IV: false
-              V: false
-              VII: false
-          given_diagnosis_spsn:
-          - 0.76
-          - 0.81
-          t_stage: late
-          midline_extension: true
-        - name: contra/III/ipsi-IIandIII/late/noext
-          involvement:
-            contra:
-              III: true
-          given_diagnosis:
-            ipsi:
-              I: false
-              II: true
-              III: true
-              IV: false
-              V: false
-              VII: false
-            contra:
-              I: false
-              II: false
-              III: false
-              IV: false
-              V: false
-              VII: false
-          given_diagnosis_spsn:
-          - 0.76
-          - 0.81
-          t_stage: late
-          midline_extension: false
-        - name: contra/III/ipsi-IIandIII/late/ext
-          involvement:
-            contra:
-              III: true
-          given_diagnosis:
-            ipsi:
-              I: false
-              II: true
-              III: true
-              IV: false
-              V: false
-              VII: false
-            contra:
-              I: false
-              II: false
-              III: false
-              IV: false
-              V: false
-              VII: false
-          given_diagnosis_spsn:
-          - 0.76
-          - 0.81
-          t_stage: late
-          midline_extension: true
+        risks: []
     outs:
-    - path: models/risks.hdf5
-      md5: 482530636158d86338279d278b63ae87
-      size: 470280
+    - path: simple_graph/A/risks.hdf5
+      hash: md5
+      md5: 6781e0baec8d65b9a95a3e879a5098d1
+      size: 800
   evaluate:
-    cmd: "lyscripts evaluate data/cleaned.csv models/samples.hdf5 --metrics metrics.json
-      --plots plots/ti/accuracies.csv\n"
+    cmd: "lyscripts evaluate data/cleaned.csv simple_graph/A/samples.hdf5 --metrics
+      simple_graph/A/metrics.json\n"
     deps:
     - path: data/cleaned.csv
       hash: md5
-      md5: 9e99529170c092774a0933c11fac75ec
-      size: 227786
-    - path: models/samples.hdf5
+      md5: 83b733818f12b726245436b20f41ce8e
+      size: 81563
+    - path: simple_graph/A/samples.hdf5
       hash: md5
-      md5: e57ceda4fe25f53fe1b4e0cd4c5df323
-      size: 104167864
+      md5: 21bbc5e14ca75dfe9abdab5b3bf18005
+      size: 23253464
     params:
       params.yaml:
         graph:
           tumor:
             primary:
-            - I
             - II
             - III
-            - IV
-            - V
-            - VII
           lnl:
-            I: []
             II: []
-            III:
-            - IV
-            IV: []
-            V: []
-            VII: []
+            III: []
         modalities:
           CT:
           - 0.76
@@ -421,9 +314,9 @@ stages:
           temp_schedule:
           - 0.0
           - 1.0076210988534706e-09
-          - 3.224387516331106e-08
-          - 2.448519270213934e-07
-          - 1.031804005225954e-06
+          - 3.224387516331105e-08
+          - 2.448519270213932e-07
+          - 1.031804005225953e-06
           - 3.148815933917096e-06
           - 7.835261664684588e-06
           - 1.6935087808430282e-05
@@ -489,125 +382,120 @@ stages:
             trust_threshold: 30.0
             rel_acor_threshold: 0.075
     outs:
-    - path: metrics.json
+    - path: simple_graph/A/metrics.json
       hash: md5
-      md5: 2c75292e5fa6565a990ff5971910f983
-      size: 159
-    - path: plots/ti/accuracies.csv
-      hash: md5
-      md5: 342da680ab433f544177360c38b1b454
-      size: 3716
+      md5: 8521407582dec7a9f9b4f4a68839754a
+      size: 161
   predict-prevalences:
-    cmd: "lyscripts predict prevalences models/samples.hdf5 data/cleaned.csv models/prevalences.hdf5\n"
+    cmd: "lyscripts predict prevalences simple_graph/A/samples.hdf5 data/cleaned.csv
+      simple_graph/A/prevalences.hdf5\n"
     deps:
     - path: data/cleaned.csv
-      md5: 4c6ec4376c1d6ca3814a17a61305c89b
-      size: 300071
-    - path: models/samples.hdf5
-      md5: cf0603eb71eb87010494a1629f3c78ea
-      size: 4839888
+      hash: md5
+      md5: 83b733818f12b726245436b20f41ce8e
+      size: 81563
+    - path: simple_graph/A/samples.hdf5
+      hash: md5
+      md5: 21bbc5e14ca75dfe9abdab5b3bf18005
+      size: 23253464
     params:
       params.yaml:
         graph:
           tumor:
             primary:
-            - I
             - II
             - III
-            - IV
-            - V
-            - VII
           lnl:
-            I: []
-            II:
-            - I
-            - III
-            - V
-            III:
-            - IV
-            - V
-            IV: []
-            V: []
-            VII: []
+            II: []
+            III: []
         model:
           first_binom_prob: 0.3
           max_t: 10
           t_stages:
           - early
           - late
-          class: MidlineBilateral
+          class: Unilateral
           kwargs:
             base_symmetric: false
             trans_symmetric: true
             use_mixing: true
         prevalences:
-        - name: ipsi/IInotI/early
+        - name: healthy/early
           pattern:
             ipsi:
-              I: false
-              II: true
-          modality: max_llh
-          modality_spsn:
-          - 1.0
-          - 1.0
+              II: false
+              III: false
           t_stage: early
-        - name: ipsi/IInotI/late
+        - name: healthy/late
           pattern:
             ipsi:
-              I: false
-              II: true
-          modality: max_llh
-          modality_spsn:
-          - 1.0
-          - 1.0
+              II: false
+              III: false
           t_stage: late
-        - name: ipsi/IIandIII/early
+        - name: II/early
           pattern:
             ipsi:
               II: true
-              III: true
-          modality: max_llh
-          modality_spsn:
-          - 1.0
-          - 1.0
+              III: false
           t_stage: early
-        - name: ipsi/IIandIII/late
+        - name: II/late
+          pattern:
+            ipsi:
+              II: true
+              III: false
+          t_stage: late
+        - name: III/early
+          pattern:
+            ipsi:
+              II: false
+              III: true
+          t_stage: early
+        - name: III/late
+          pattern:
+            ipsi:
+              II: false
+              III: true
+          t_stage: late
+        - name: both/early
           pattern:
             ipsi:
               II: true
               III: true
-          modality: max_llh
-          modality_spsn:
-          - 1.0
-          - 1.0
+          t_stage: early
+        - name: both/late
+          pattern:
+            ipsi:
+              II: true
+              III: true
           t_stage: late
     outs:
-    - path: models/prevalences.hdf5
-      md5: c0bef3861c2871034bcf3fd4de248e6e
-      size: 619656
+    - path: simple_graph/A/prevalences.hdf5
+      hash: md5
+      md5: 589449f086955c0ba2c9fc53f16db727
+      size: 89568
   plot-corner:
-    cmd: "lyscripts plot corner models/samples.hdf5 plots/corner.png\n"
+    cmd: "lyscripts plot corner simple_graph/A/samples.hdf5 simple_graph/A/plots/corner.png\n"
     deps:
-    - path: models/samples.hdf5
+    - path: simple_graph/A/samples.hdf5
       hash: md5
-      md5: e57ceda4fe25f53fe1b4e0cd4c5df323
-      size: 104167864
+      md5: 21bbc5e14ca75dfe9abdab5b3bf18005
+      size: 23253464
     outs:
-    - path: plots/corner.png
+    - path: simple_graph/A/plots/corner.png
       hash: md5
-      md5: 163d7089751ff578d4f366b0c6da1660
-      size: 646582
-    - path: plots/corner.svg
+      md5: cf58c0e185c648dcd2718a3622583c9b
+      size: 65276
+    - path: simple_graph/A/plots/corner.svg
       hash: md5
-      md5: 2e67fcc8cd35c5a38a8f7aaf85c2ff06
-      size: 2708273
+      md5: 1cd0d151bca6e34cf81a8b116d410662
+      size: 280415
   filter:
     cmd: "python scripts/filter.py --input data/enhanced.csv --output data/filtered.csv\n"
     deps:
     - path: data/enhanced.csv
       hash: md5
-      md5: c47cda3386f87dd144743b5d4d0bcc2a
-      size: 976692
+      md5: ce58ed38b233179d31e7e647f0d9edce
+      size: 221916
     - path: scripts/filter.py
       hash: md5
       md5: f512d1482a7a03f178b554b3837376a3
@@ -615,5 +503,5 @@ stages:
     outs:
     - path: data/filtered.csv
       hash: md5
-      md5: de35d3fcd02a05fc39fe0afcc1becb6a
-      size: 529238
+      md5: 2305c3e0c0ec642cbf97039b0725fb75
+      size: 5153
