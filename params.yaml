@@ -2,11 +2,11 @@
 # in the pipeline file `dvc.yaml`.
 general:
   data: data/cleaned.csv
-  samples: simple_graph/C/samples.hdf5
-  risks: simple_graph/C/risks.hdf5
-  prevalences: simple_graph/C/prevalences.hdf5
-  metrics: simple_graph/C/metrics.json
-  plots_dir: simple_graph/C/plots
+  samples: base_graph/A/samples.hdf5
+  risks: base_graph/A/risks.hdf5
+  prevalences: base_graph/A/prevalences.hdf5
+  metrics: base_graph/A/metrics.json
+  plots_dir: base_graph/A/plots
 
 
 ########################################################################################
@@ -14,11 +14,12 @@ general:
 # graph and how they are connected.
 graph:
   tumor:
-    primary: [II, III]
+    primary: [II, III, IV]
   lnl:
 
-    II: []
-    III: [II]
+    II: [III]
+    III: [IV]
+    IV: []
 
 
 ########################################################################################
@@ -179,35 +180,35 @@ risks: []
 # prevalence of a certain pattern of involvement for a defined
 # diagnostic modality. It can, however, be compared to the prevalence
 # in the data.
-prevalences: 
-- name: healthy/early
-  pattern: {"ipsi": {"II": False, "III": False}}
-  t_stage: early
+prevalences: []
+# - name: healthy/early
+#   pattern: {"ipsi": {"II": False, "III": False}}
+#   t_stage: early
 
-- name: healthy/late
-  pattern: {"ipsi": {"II": False, "III": False}}
-  t_stage: late
+# - name: healthy/late
+#   pattern: {"ipsi": {"II": False, "III": False}}
+#   t_stage: late
 
-- name: II/early
-  pattern: {"ipsi": {"II": True, "III": False}}
-  t_stage: early
+# - name: II/early
+#   pattern: {"ipsi": {"II": True, "III": False}}
+#   t_stage: early
 
-- name: II/late
-  pattern: {"ipsi": {"II": True, "III": False}}
-  t_stage: late
+# - name: II/late
+#   pattern: {"ipsi": {"II": True, "III": False}}
+#   t_stage: late
 
-- name: III/early
-  pattern: {"ipsi": {"II": False, "III": True}}
-  t_stage: early
+# - name: III/early
+#   pattern: {"ipsi": {"II": False, "III": True}}
+#   t_stage: early
 
-- name: III/late
-  pattern: {"ipsi": {"II": False, "III": True}}
-  t_stage: late
+# - name: III/late
+#   pattern: {"ipsi": {"II": False, "III": True}}
+#   t_stage: late
 
-- name: both/early
-  pattern: {"ipsi": {"II": True, "III": True}}
-  t_stage: early
+# - name: both/early
+#   pattern: {"ipsi": {"II": True, "III": True}}
+#   t_stage: early
 
-- name: both/late
-  pattern: {"ipsi": {"II": True, "III": True}}
-  t_stage: late
+# - name: both/late
+#   pattern: {"ipsi": {"II": True, "III": True}}
+#   t_stage: late
