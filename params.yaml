@@ -205,20 +205,20 @@ prevalences:
   pattern: {"ipsi": {"II": True, "III": True, "IV": True}}
   t_stage: late
 
-- name: IV/early
-  pattern: {"ipsi": {"II": False, "III": False, "IV": True}}
-  t_stage: early
-
-- name: IV/late
-  pattern: {"ipsi": {"II": False, "III": False, "IV": True}}
-  t_stage: late
-
 - name: III_IV/early
   pattern: {"ipsi": {"II": False, "III": True, "IV": True}}
   t_stage: early
 
 - name: III_IV/late
   pattern: {"ipsi": {"II": False, "III": True, "IV": True}}
+  t_stage: late
+
+- name: II_IV/early
+  pattern: {"ipsi": {"II": True, "III": False, "IV": True}}
+  t_stage: early
+
+- name: II_IV/late
+  pattern: {"ipsi": {"II": True, "III": False, "IV": True}}
   t_stage: late
 # - name: healthy/late
 #   pattern: {"ipsi": {"II": False, "III": False}}

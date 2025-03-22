@@ -324,7 +324,7 @@ stages:
           - 0.0
           - 1.0076210988534706e-09
           - 3.224387516331105e-08
-          - 2.448519270213932e-07
+          - 2.448519270213933e-07
           - 1.031804005225953e-06
           - 3.148815933917096e-06
           - 7.835261664684588e-06
@@ -474,20 +474,6 @@ stages:
               III: true
               IV: true
           t_stage: late
-        - name: IV/early
-          pattern:
-            ipsi:
-              II: false
-              III: false
-              IV: true
-          t_stage: early
-        - name: IV/late
-          pattern:
-            ipsi:
-              II: false
-              III: false
-              IV: true
-          t_stage: late
         - name: III_IV/early
           pattern:
             ipsi:
@@ -502,10 +488,24 @@ stages:
               III: true
               IV: true
           t_stage: late
+        - name: II_IV/early
+          pattern:
+            ipsi:
+              II: true
+              III: false
+              IV: true
+          t_stage: early
+        - name: II_IV/late
+          pattern:
+            ipsi:
+              II: true
+              III: false
+              IV: true
+          t_stage: late
     outs:
     - path: base_graph/C/prevalences.hdf5
       hash: md5
-      md5: 58c74d326890d4e236f94063b7aaf2f6
+      md5: ab0eb02bcd8a3a2ad1753df185198480
       size: 174720
   plot-corner:
     cmd: "lyscripts plot corner base_graph/C/samples.hdf5 base_graph/C/plots/corner.png\n"
