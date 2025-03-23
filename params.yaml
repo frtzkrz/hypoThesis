@@ -2,11 +2,11 @@
 # in the pipeline file `dvc.yaml`.
 general:
   data: data/cleaned.csv
-  samples: V/C/samples.hdf5
-  risks: V/C/risks.hdf5
-  prevalences: V/C/prevalences.hdf5
-  metrics: V/C/metrics.json
-  plots_dir: V/C/plots
+  samples: V/D/samples.hdf5
+  risks: V/D/risks.hdf5
+  prevalences: V/D/prevalences.hdf5
+  metrics: V/D/metrics.json
+  plots_dir: V/D/plots
 
 
 ########################################################################################
@@ -16,8 +16,8 @@ graph:
   tumor:
     primary: [II, III, IV, V]
   lnl:
-    II: [III, V]
-    III: [IV]
+    II: [III]
+    III: [IV, V]
     IV: []
     V: []
 
