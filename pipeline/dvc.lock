@@ -73,7 +73,7 @@ stages:
       md5: 83b733818f12b726245436b20f41ce8e
       size: 81563
   sampling:
-    cmd: "lyscripts sample data/cleaned.csv all/D/samples.hdf5 --plots all/D/plots/sampling
+    cmd: "lyscripts sample data/cleaned.csv base/full/A/samples.hdf5 --plots base/full/A/plots/sampling
       --modalities max_llh\n"
     deps:
     - path: data/cleaned.csv
@@ -96,12 +96,9 @@ stages:
             I: []
             II:
             - III
-            - I
             III:
             - IV
-            - VI
-            IV:
-            - V
+            IV: []
             V: []
             VI: []
             VII: []
@@ -217,25 +214,25 @@ stages:
             trust_threshold: 30.0
             rel_acor_threshold: 0.075
     outs:
-    - path: all/D/plots/sampling/accept_rates.csv
+    - path: base/full/A/plots/sampling/accept_rates.csv
       hash: md5
-      md5: 464e3c7e92e5f4b70c032b3187bf6f7f
-      size: 1075
-    - path: all/D/plots/sampling/acor_times.csv
+      md5: a5539d6b7881c067ae1f6cdcca7ec538
+      size: 739
+    - path: base/full/A/plots/sampling/acor_times.csv
       hash: md5
-      md5: 0347153c3f82a833b2a8afa683a413e6
-      size: 1051
-    - path: all/D/samples.hdf5
+      md5: 83b67f1f1de128db543dac98b05d48ac
+      size: 829
+    - path: base/full/A/samples.hdf5
       hash: md5
-      md5: c448e18900ede0c6f0c1712065e1daca
-      size: 2174592
+      md5: 3d91cc4fc35e0793407b904052eb4936
+      size: 2389792
   predict-risks:
-    cmd: "lyscripts predict risks all/D/samples.hdf5 all/D/risks.hdf5\n"
+    cmd: "lyscripts predict risks base/full/A/samples.hdf5 base/full/A/risks.hdf5\n"
     deps:
-    - path: all/D/samples.hdf5
+    - path: base/full/A/samples.hdf5
       hash: md5
-      md5: c448e18900ede0c6f0c1712065e1daca
-      size: 2174592
+      md5: 3d91cc4fc35e0793407b904052eb4936
+      size: 2389792
     params:
       params.yaml:
         graph:
@@ -252,12 +249,9 @@ stages:
             I: []
             II:
             - III
-            - I
             III:
             - IV
-            - VI
-            IV:
-            - V
+            IV: []
             V: []
             VI: []
             VII: []
@@ -274,17 +268,17 @@ stages:
             use_mixing: true
         risks: []
     outs:
-    - path: all/D/risks.hdf5
+    - path: base/full/A/risks.hdf5
       hash: md5
       md5: 6781e0baec8d65b9a95a3e879a5098d1
       size: 800
   evaluate:
-    cmd: "lyscripts evaluate data/cleaned.csv all/D/samples.hdf5 --metrics all/D/metrics.json\n"
+    cmd: "lyscripts evaluate data/cleaned.csv base/full/A/samples.hdf5 --metrics base/full/A/metrics.json\n"
     deps:
-    - path: all/D/samples.hdf5
+    - path: base/full/A/samples.hdf5
       hash: md5
-      md5: c448e18900ede0c6f0c1712065e1daca
-      size: 2174592
+      md5: 3d91cc4fc35e0793407b904052eb4936
+      size: 2389792
     - path: data/cleaned.csv
       hash: md5
       md5: 83b733818f12b726245436b20f41ce8e
@@ -305,12 +299,9 @@ stages:
             I: []
             II:
             - III
-            - I
             III:
             - IV
-            - VI
-            IV:
-            - V
+            IV: []
             V: []
             VI: []
             VII: []
@@ -426,17 +417,18 @@ stages:
             trust_threshold: 30.0
             rel_acor_threshold: 0.075
     outs:
-    - path: all/D/metrics.json
+    - path: base/full/A/metrics.json
       hash: md5
-      md5: d14beac603a5f7524c91efc907f856d9
-      size: 90
+      md5: 63b3a174620eb24c97b05533f60c21c4
+      size: 89
   predict-prevalences:
-    cmd: "lyscripts predict prevalences all/D/samples.hdf5 data/cleaned.csv all/D/prevalences.hdf5\n"
+    cmd: "lyscripts predict prevalences base/full/A/samples.hdf5 data/cleaned.csv
+      base/full/A/prevalences.hdf5\n"
     deps:
-    - path: all/D/samples.hdf5
+    - path: base/full/A/samples.hdf5
       hash: md5
-      md5: c448e18900ede0c6f0c1712065e1daca
-      size: 2174592
+      md5: 3d91cc4fc35e0793407b904052eb4936
+      size: 2389792
     - path: data/cleaned.csv
       hash: md5
       md5: 83b733818f12b726245436b20f41ce8e
@@ -457,12 +449,9 @@ stages:
             I: []
             II:
             - III
-            - I
             III:
             - IV
-            - VI
-            IV:
-            - V
+            IV: []
             V: []
             VI: []
             VII: []
@@ -477,120 +466,28 @@ stages:
             base_symmetric: false
             trans_symmetric: true
             use_mixing: true
-        prevalences:
-        - name: healthy/early
-          pattern:
-            ipsi:
-              II: false
-              III: false
-              IV: false
-          t_stage: early
-        - name: healthy/late
-          pattern:
-            ipsi:
-              II: false
-              III: false
-              IV: false
-          t_stage: late
-        - name: II_notIII/early
-          pattern:
-            ipsi:
-              II: true
-              III: false
-          t_stage: early
-        - name: II_notIII/late
-          pattern:
-            ipsi:
-              II: true
-              III: false
-          t_stage: late
-        - name: III_notII/early
-          pattern:
-            ipsi:
-              II: false
-              III: true
-          t_stage: early
-        - name: III_notII/late
-          pattern:
-            ipsi:
-              II: false
-              III: true
-          t_stage: late
-        - name: II_III/early
-          pattern:
-            ipsi:
-              II: true
-              III: true
-          t_stage: early
-        - name: II_III/late
-          pattern:
-            ipsi:
-              II: true
-              III: true
-          t_stage: late
-        - name: II_IV_notIII/early
-          pattern:
-            ipsi:
-              II: true
-              III: false
-              IV: true
-          t_stage: early
-        - name: II_IV_notIII/late
-          pattern:
-            ipsi:
-              II: true
-              III: false
-              IV: true
-          t_stage: late
-        - name: III_IV_notII/early
-          pattern:
-            ipsi:
-              II: false
-              III: true
-              IV: true
-          t_stage: early
-        - name: III_IV_notII/late
-          pattern:
-            ipsi:
-              II: false
-              III: true
-              IV: true
-          t_stage: late
-        - name: all/early
-          pattern:
-            ipsi:
-              II: true
-              III: true
-              IV: true
-          t_stage: early
-        - name: all/late
-          pattern:
-            ipsi:
-              II: true
-              III: true
-              IV: true
-          t_stage: late
+        prevalences: []
     outs:
-    - path: all/D/prevalences.hdf5
+    - path: base/full/A/prevalences.hdf5
       hash: md5
-      md5: e42244c1db31469e0ae4afe830eb2625
-      size: 601216
+      md5: 6781e0baec8d65b9a95a3e879a5098d1
+      size: 800
   plot-corner:
-    cmd: "lyscripts plot corner all/D/samples.hdf5 all/D/plots/corner.png\n"
+    cmd: "lyscripts plot corner base/full/A/samples.hdf5 base/full/A/plots/corner.png\n"
     deps:
-    - path: all/D/samples.hdf5
+    - path: base/full/A/samples.hdf5
       hash: md5
-      md5: c448e18900ede0c6f0c1712065e1daca
-      size: 2174592
+      md5: 3d91cc4fc35e0793407b904052eb4936
+      size: 2389792
     outs:
-    - path: all/D/plots/corner.png
+    - path: base/full/A/plots/corner.png
       hash: md5
-      md5: eb36a64f6065beeef821c8abf65d9f3c
-      size: 1298041
-    - path: all/D/plots/corner.svg
+      md5: a07b057e6d7e33d7e7f6a541ab9a2df6
+      size: 807284
+    - path: base/full/A/plots/corner.svg
       hash: md5
-      md5: dc40fbbb076d7cefa3205187779647d6
-      size: 7622582
+      md5: 661ef13e57be992ef3712cc064fb180a
+      size: 5428844
   filter:
     cmd: "python scripts/filter.py --input data/enhanced.csv --output data/filtered.csv\n"
     deps:

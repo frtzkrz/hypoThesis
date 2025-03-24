@@ -2,11 +2,11 @@
 # in the pipeline file `dvc.yaml`.
 general:
   data: data/cleaned.csv
-  samples: all/D/samples.hdf5
-  risks: all/D/risks.hdf5
-  prevalences: all/D/prevalences.hdf5
-  metrics: all/D/metrics.json
-  plots_dir: all/D/plots
+  samples: base/full/A/samples.hdf5
+  risks: base/full/A/risks.hdf5
+  prevalences: base/full/A/prevalences.hdf5
+  metrics: base/full/A/metrics.json
+  plots_dir: base/full/A/plots
 
 
 ########################################################################################
@@ -17,9 +17,9 @@ graph:
     primary: [I, II, III, IV, V, VI, VII]
   lnl:
     I: []
-    II: [III, I]
-    III: [IV, VI]
-    IV: [V]
+    II: [III]
+    III: [IV]
+    IV: []
     V: []
     VI: []
     VII: []
@@ -184,59 +184,59 @@ risks: []
 # prevalence of a certain pattern of involvement for a defined
 # diagnostic modality. It can, however, be compared to the prevalence
 # in the data.
-prevalences: 
-- name: healthy/early
-  pattern: {"ipsi": {"II": False, "III": False, "IV": False}}
-  t_stage: early
+prevalences: []
+# - name: healthy/early
+#   pattern: {"ipsi": {"II": False, "III": False, "IV": False}}
+#   t_stage: early
 
-- name: healthy/late
-  pattern: {"ipsi": {"II": False, "III": False, "IV": False}}
-  t_stage: late
+# - name: healthy/late
+#   pattern: {"ipsi": {"II": False, "III": False, "IV": False}}
+#   t_stage: late
 
-- name: II_notIII/early
-  pattern: {"ipsi": {"II": True, "III": False}}
-  t_stage: early
+# - name: II_notIII/early
+#   pattern: {"ipsi": {"II": True, "III": False}}
+#   t_stage: early
 
-- name: II_notIII/late
-  pattern: {"ipsi": {"II": True, "III": False}}
-  t_stage: late
+# - name: II_notIII/late
+#   pattern: {"ipsi": {"II": True, "III": False}}
+#   t_stage: late
 
-- name: III_notII/early
-  pattern: {"ipsi": {"II": False, "III": True}}
-  t_stage: early
+# - name: III_notII/early
+#   pattern: {"ipsi": {"II": False, "III": True}}
+#   t_stage: early
 
-- name: III_notII/late
-  pattern: {"ipsi": {"II": False, "III": True}}
-  t_stage: late
+# - name: III_notII/late
+#   pattern: {"ipsi": {"II": False, "III": True}}
+#   t_stage: late
 
-- name: II_III/early
-  pattern: {"ipsi": {"II": True, "III": True}}
-  t_stage: early
+# - name: II_III/early
+#   pattern: {"ipsi": {"II": True, "III": True}}
+#   t_stage: early
 
-- name: II_III/late
-  pattern: {"ipsi": {"II": True, "III": True}}
-  t_stage: late
+# - name: II_III/late
+#   pattern: {"ipsi": {"II": True, "III": True}}
+#   t_stage: late
 
-- name: II_IV_notIII/early
-  pattern: {"ipsi": {"II": True, "III": False, "IV": True}}
-  t_stage: early
+# - name: II_IV_notIII/early
+#   pattern: {"ipsi": {"II": True, "III": False, "IV": True}}
+#   t_stage: early
 
-- name: II_IV_notIII/late
-  pattern: {"ipsi": {"II": True, "III": False, "IV": True}}
-  t_stage: late
+# - name: II_IV_notIII/late
+#   pattern: {"ipsi": {"II": True, "III": False, "IV": True}}
+#   t_stage: late
 
-- name: III_IV_notII/early
-  pattern: {"ipsi": {"II": False, "III": True, "IV": True}}
-  t_stage: early
+# - name: III_IV_notII/early
+#   pattern: {"ipsi": {"II": False, "III": True, "IV": True}}
+#   t_stage: early
 
-- name: III_IV_notII/late
-  pattern: {"ipsi": {"II": False, "III": True, "IV": True}}
-  t_stage: late
+# - name: III_IV_notII/late
+#   pattern: {"ipsi": {"II": False, "III": True, "IV": True}}
+#   t_stage: late
 
-- name: all/early
-  pattern: {"ipsi": {"II": True, "III": True, "IV": True}}
-  t_stage: early
+# - name: all/early
+#   pattern: {"ipsi": {"II": True, "III": True, "IV": True}}
+#   t_stage: early
 
-- name: all/late
-  pattern: {"ipsi": {"II": True, "III": True, "IV": True}}
-  t_stage: late
+# - name: all/late
+#   pattern: {"ipsi": {"II": True, "III": True, "IV": True}}
+#   t_stage: late
