@@ -2,11 +2,11 @@
 # in the pipeline file `dvc.yaml`.
 general:
   data: data/cleaned.csv
-  samples: base/full/A/samples.hdf5
-  risks: base/full/A/risks.hdf5
-  prevalences: base/full/A/prevalences.hdf5
-  metrics: base/full/A/metrics.json
-  plots_dir: base/full/A/plots
+  samples: V/full/B/samples.hdf5
+  risks: V/full/B/risks.hdf5
+  prevalences: V/full/B/prevalences.hdf5
+  metrics: V/full/B/metrics.json
+  plots_dir: V/full/B/plots
 
 
 ########################################################################################
@@ -19,7 +19,7 @@ graph:
     I: []
     II: [III]
     III: [IV]
-    IV: []
+    IV: [V]
     V: []
     VI: []
     VII: []
@@ -186,44 +186,44 @@ risks: []
 # in the data.
 prevalences: 
 
-- name: IVoverall/early
-  pattern: {"ipsi": {"IV": True}}
+- name: Voverall/early
+  pattern: {"ipsi": {"V": True}}
   t_stage: early
-- name: IVoverall/late
-  pattern: {"ipsi": {"IV": True}}
+- name: Voverall/late
+  pattern: {"ipsi": {"V": True}}
   t_stage: late
 
-- name: IVnotIII/early
-  pattern: {"ipsi": {"III": False, "IV": True}}
+- name: VnotII/early
+  pattern: {"ipsi": {“II”: False, ”V”: True}}
   t_stage: early
-- name: IVnotIII/late
-  pattern: {"ipsi": {"III": False, "IV": True}}
+- name: VnotII/late
+  pattern: {"ipsi": {“II”: False, ”V”: True}}
   t_stage: late
 
-- name: IIIoverall/early
-  pattern: {"ipsi": {"III": True}}
+- name: VnotIII/early
+  pattern: {"ipsi": {“III”: False, ”V”: True}}
   t_stage: early
-- name: IIIoverall/late
-  pattern: {"ipsi": {"III": True}}
+- name: VnotIII/late
+  pattern: {"ipsi": {“III”: False, ”V”: True}}
   t_stage: late
 
-- name: IIInotII/early
-  pattern: {"ipsi": {"II": False, "III": True}}
+- name: VnotIV/early
+  pattern: {"ipsi": {“IV”: False, ”V”: True}}
   t_stage: early
-- name: IIInotII/late
-  pattern: {"ipsi": {"II": False, "III": True}}
+- name: VnotIV/late
+  pattern: {"ipsi": {“IV”: False, ”V”: True}}
   t_stage: late
 
-- name: IIoverall/early
-  pattern: {"ipsi": {"II": True}}
+- name: VnotII_IV/early
+  pattern: {"ipsi": {“II”: False, “IV”: False, ”V”: True}}
   t_stage: early
-- name: IIoverall/late
-  pattern: {"ipsi": {"II": True}}
+- name: VnotII_IV/late
+  pattern: {"ipsi": {“II”: False, “IV”: False, ”V”: True}}
   t_stage: late
 
-- name: IInotIII/early
-  pattern: {"ipsi": {"II": True, "III": False}}
+- name: VnotIII_IV/early
+  pattern: {"ipsi": {“III”: False, “IV”: False, ”V”: True}}
   t_stage: early
-- name: IInotIII/late
-  pattern: {"ipsi": {"II": True, "III": False}}
+- name: VnotIII_IV/late
+  pattern: {"ipsi": {“III”: False, “IV”: False, ”V”: True}}
   t_stage: late
