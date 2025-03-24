@@ -184,59 +184,46 @@ risks: []
 # prevalence of a certain pattern of involvement for a defined
 # diagnostic modality. It can, however, be compared to the prevalence
 # in the data.
-prevalences: []
-# - name: healthy/early
-#   pattern: {"ipsi": {"II": False, "III": False, "IV": False}}
-#   t_stage: early
+prevalences: 
 
-# - name: healthy/late
-#   pattern: {"ipsi": {"II": False, "III": False, "IV": False}}
-#   t_stage: late
+- name: IVoverall/early
+  pattern: {"ipsi": {"IV": True}}
+  t_stage: early
+- name: IVoverall/late
+  pattern: {"ipsi": {"IV": True}}
+  t_stage: late
 
-# - name: II_notIII/early
-#   pattern: {"ipsi": {"II": True, "III": False}}
-#   t_stage: early
+- name: IVnotIII/early
+  pattern: {"ipsi": {"III": False, "IV": True}}
+  t_stage: early
+- name: IVnotIII/late
+  pattern: {"ipsi": {"III": False, "IV": True}}
+  t_stage: late
 
-# - name: II_notIII/late
-#   pattern: {"ipsi": {"II": True, "III": False}}
-#   t_stage: late
+- name: IIIoverall/early
+  pattern: {"ipsi": {"III": True}}
+  t_stage: early
+- name: IIIoverall/late
+  pattern: {"ipsi": {"III": True}}
+  t_stage: late
 
-# - name: III_notII/early
-#   pattern: {"ipsi": {"II": False, "III": True}}
-#   t_stage: early
+- name: IIInotII/early
+  pattern: {"ipsi": {"II": False, "III": True}}
+  t_stage: early
+- name: IIInotII/late
+  pattern: {"ipsi": {"II": False, "III": True}}
+  t_stage: late
 
-# - name: III_notII/late
-#   pattern: {"ipsi": {"II": False, "III": True}}
-#   t_stage: late
+- name: IIoverall/early
+  pattern: {"ipsi": {"II": True}}
+  t_stage: early
+- name: IIoverall/late
+  pattern: {"ipsi": {"II": True}}
+  t_stage: late
 
-# - name: II_III/early
-#   pattern: {"ipsi": {"II": True, "III": True}}
-#   t_stage: early
-
-# - name: II_III/late
-#   pattern: {"ipsi": {"II": True, "III": True}}
-#   t_stage: late
-
-# - name: II_IV_notIII/early
-#   pattern: {"ipsi": {"II": True, "III": False, "IV": True}}
-#   t_stage: early
-
-# - name: II_IV_notIII/late
-#   pattern: {"ipsi": {"II": True, "III": False, "IV": True}}
-#   t_stage: late
-
-# - name: III_IV_notII/early
-#   pattern: {"ipsi": {"II": False, "III": True, "IV": True}}
-#   t_stage: early
-
-# - name: III_IV_notII/late
-#   pattern: {"ipsi": {"II": False, "III": True, "IV": True}}
-#   t_stage: late
-
-# - name: all/early
-#   pattern: {"ipsi": {"II": True, "III": True, "IV": True}}
-#   t_stage: early
-
-# - name: all/late
-#   pattern: {"ipsi": {"II": True, "III": True, "IV": True}}
-#   t_stage: late
+- name: IInotIII/early
+  pattern: {"ipsi": {"II": True, "III": False}}
+  t_stage: early
+- name: IInotIII/late
+  pattern: {"ipsi": {"II": True, "III": False}}
+  t_stage: late
