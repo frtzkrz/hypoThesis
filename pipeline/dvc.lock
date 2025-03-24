@@ -487,71 +487,71 @@ stages:
         - name: VnotII/early
           pattern:
             ipsi:
-              “II”: false
-              ”V”: true
+              II: false
+              V: true
           t_stage: early
         - name: VnotII/late
           pattern:
             ipsi:
-              “II”: false
-              ”V”: true
+              II: false
+              V: true
           t_stage: late
         - name: VnotIII/early
           pattern:
             ipsi:
-              “III”: false
-              ”V”: true
+              III: false
+              V: true
           t_stage: early
         - name: VnotIII/late
           pattern:
             ipsi:
-              “III”: false
-              ”V”: true
+              III: false
+              V: true
           t_stage: late
         - name: VnotIV/early
           pattern:
             ipsi:
-              “IV”: false
-              ”V”: true
+              IV: false
+              V: true
           t_stage: early
         - name: VnotIV/late
           pattern:
             ipsi:
-              “IV”: false
-              ”V”: true
+              IV: false
+              V: true
           t_stage: late
         - name: VnotII_IV/early
           pattern:
             ipsi:
-              “II”: false
-              “IV”: false
-              ”V”: true
+              II: false
+              IV: false
+              V: true
           t_stage: early
         - name: VnotII_IV/late
           pattern:
             ipsi:
-              “II”: false
-              “IV”: false
-              ”V”: true
+              II: false
+              IV: false
+              V: true
           t_stage: late
         - name: VnotIII_IV/early
           pattern:
             ipsi:
-              “III”: false
-              “IV”: false
-              ”V”: true
+              III: false
+              IV: false
+              V: true
           t_stage: early
         - name: VnotIII_IV/late
           pattern:
             ipsi:
-              “III”: false
-              “IV”: false
-              ”V”: true
+              III: false
+              IV: false
+              V: true
           t_stage: late
     outs:
     - path: V/full/C/prevalences.hdf5
       hash: md5
-      md5: 2c21ba9fcd0f2799306f70c454aee52d
+      md5: d2c31d9060bb382f3be08b71b038a28e
       size: 477568
   plot-corner:
     cmd: "lyscripts plot corner V/full/C/samples.hdf5 V/full/C/plots/corner.png\n"

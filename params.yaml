@@ -194,36 +194,37 @@ prevalences:
   t_stage: late
 
 - name: VnotII/early
-  pattern: {"ipsi": {“II”: False, ”V”: True}}
+  pattern: {"ipsi": {"II": False, "V": True}}
   t_stage: early
 - name: VnotII/late
-  pattern: {"ipsi": {“II”: False, ”V”: True}}
+  pattern: {"ipsi": {"II": False, "V": True}}
   t_stage: late
 
 - name: VnotIII/early
-  pattern: {"ipsi": {“III”: False, ”V”: True}}
+  pattern: {"ipsi": {"III": False, "V": True}}
   t_stage: early
 - name: VnotIII/late
-  pattern: {"ipsi": {“III”: False, ”V”: True}}
+  pattern: {"ipsi": {"III": False, "V": True}}
   t_stage: late
 
 - name: VnotIV/early
-  pattern: {"ipsi": {“IV”: False, ”V”: True}}
+  pattern: {"ipsi": {"IV": False, "V": True}}
   t_stage: early
 - name: VnotIV/late
-  pattern: {"ipsi": {“IV”: False, ”V”: True}}
+  pattern: {"ipsi": {"IV": False, "V": True}}
   t_stage: late
 
 - name: VnotII_IV/early
-  pattern: {"ipsi": {“II”: False, “IV”: False, ”V”: True}}
+  pattern: {"ipsi": {"II": False, "IV": False, "V": True}}
   t_stage: early
 - name: VnotII_IV/late
-  pattern: {"ipsi": {“II”: False, “IV”: False, ”V”: True}}
+  pattern: {"ipsi": {"II": False, "IV": False, "V": True}}
   t_stage: late
 
 - name: VnotIII_IV/early
-  pattern: {"ipsi": {“III”: False, “IV”: False, ”V”: True}}
+  pattern: {"ipsi": {"III": False, "IV": False, "V": True}}
   t_stage: early
 - name: VnotIII_IV/late
-  pattern: {"ipsi": {“III”: False, “IV”: False, ”V”: True}}
+  pattern: {"ipsi": {"III": False, "IV": False, "V": True}}
   t_stage: late
+
