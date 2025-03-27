@@ -2,11 +2,11 @@
 # in the pipeline file `dvc.yaml`.
 general:
   data: data/cleaned.csv
-  samples: V/full/C/samples.hdf5
-  risks: V/full/C/risks.hdf5
-  prevalences: V/full/C/prevalences.hdf5
-  metrics: V/full/C/metrics.json
-  plots_dir: V/full/C/plots
+  samples: ludwig_winner/samples.hdf5
+  risks: ludwig_winner/risks.hdf5
+  prevalences: ludwig_winner/prevalences.hdf5
+  metrics: ludwig_winner/metrics.json
+  plots_dir: ludwig_winner/plots
 
 
 ########################################################################################
@@ -17,9 +17,9 @@ graph:
     primary: [I, II, III, IV, V, VI, VII]
   lnl:
     I: []
-    II: [III, V]
-    III: [IV]
-    IV: [V]
+    II: [I, III, V]
+    III: [IV, V]
+    IV: []
     V: []
     VI: []
     VII: []
@@ -228,3 +228,9 @@ prevalences:
   pattern: {"ipsi": {"III": False, "IV": False, "V": True}}
   t_stage: late
 
+- name: VnotII_III/early
+  pattern: {"ipsi": {"II": False, "III": False, "V": True}}
+  t_stage: early
+- name: VnotII_III/late
+  pattern: {"ipsi": {"II": False, "III": False, "V": True}}
+  t_stage: late
