@@ -96,8 +96,7 @@ stages:
             I: []
             II:
             - III
-            III:
-            - IV
+            III: []
             IV: []
             V: []
             VI: []
@@ -216,23 +215,23 @@ stages:
     outs:
     - path: plots/sampling/accept_rates.csv
       hash: md5
-      md5: a5539d6b7881c067ae1f6cdcca7ec538
-      size: 739
+      md5: 93d1beb749f5a17ff580bf718968c726
+      size: 819
     - path: plots/sampling/acor_times.csv
       hash: md5
-      md5: 83b67f1f1de128db543dac98b05d48ac
-      size: 829
+      md5: 190af36dd98357cddc341744dc829107
+      size: 803
     - path: results/samples.hdf5
       hash: md5
-      md5: 3d91cc4fc35e0793407b904052eb4936
-      size: 2389792
+      md5: dc99bff835cbade87443655fe7886dbf
+      size: 2206208
   predict-risks:
     cmd: "lyscripts predict risks results/samples.hdf5 results/risks.hdf5\n"
     deps:
     - path: results/samples.hdf5
       hash: md5
-      md5: 3d91cc4fc35e0793407b904052eb4936
-      size: 2389792
+      md5: dc99bff835cbade87443655fe7886dbf
+      size: 2206208
     params:
       params.yaml:
         graph:
@@ -249,8 +248,7 @@ stages:
             I: []
             II:
             - III
-            III:
-            - IV
+            III: []
             IV: []
             V: []
             VI: []
@@ -281,8 +279,8 @@ stages:
       size: 81563
     - path: results/samples.hdf5
       hash: md5
-      md5: 3d91cc4fc35e0793407b904052eb4936
-      size: 2389792
+      md5: dc99bff835cbade87443655fe7886dbf
+      size: 2206208
     params:
       params.yaml:
         graph:
@@ -299,8 +297,7 @@ stages:
             I: []
             II:
             - III
-            III:
-            - IV
+            III: []
             IV: []
             V: []
             VI: []
@@ -419,8 +416,8 @@ stages:
     outs:
     - path: results/metrics.json
       hash: md5
-      md5: 63b3a174620eb24c97b05533f60c21c4
-      size: 89
+      md5: 8dd84c660074193396f29d1fd366ff46
+      size: 90
   predict-prevalences:
     cmd: "lyscripts predict prevalences results/samples.hdf5 data/cleaned.csv results/prevalences.hdf5\n"
     deps:
@@ -430,8 +427,8 @@ stages:
       size: 81563
     - path: results/samples.hdf5
       hash: md5
-      md5: 3d91cc4fc35e0793407b904052eb4936
-      size: 2389792
+      md5: dc99bff835cbade87443655fe7886dbf
+      size: 2206208
     params:
       params.yaml:
         graph:
@@ -448,8 +445,7 @@ stages:
             I: []
             II:
             - III
-            III:
-            - IV
+            III: []
             IV: []
             V: []
             VI: []
@@ -535,24 +531,24 @@ stages:
     outs:
     - path: results/prevalences.hdf5
       hash: md5
-      md5: fcaaaccb131dfecdae219cf2a0fbe0d1
-      size: 400768
+      md5: d0f23cfeff7c973462e85a2a8c46fad0
+      size: 362368
   plot-corner:
     cmd: "lyscripts plot corner results/samples.hdf5 plots/corner.png\n"
     deps:
     - path: results/samples.hdf5
       hash: md5
-      md5: 3d91cc4fc35e0793407b904052eb4936
-      size: 2389792
+      md5: dc99bff835cbade87443655fe7886dbf
+      size: 2206208
     outs:
     - path: plots/corner.png
       hash: md5
-      md5: a07b057e6d7e33d7e7f6a541ab9a2df6
-      size: 807284
+      md5: 878b621176feb417255778306ba8f709
+      size: 583662
     - path: plots/corner.svg
       hash: md5
-      md5: 445a4acccc0fa33c7ac6bacbfe001754
-      size: 5428844
+      md5: 820d4e28c7244b27edd085be147128cd
+      size: 3379635
   filter:
     cmd: "python scripts/filter.py --input data/enhanced.csv --output data/filtered.csv\n"
     deps:
