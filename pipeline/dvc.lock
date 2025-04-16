@@ -70,15 +70,15 @@ stages:
     outs:
     - path: data/cleaned.csv
       hash: md5
-      md5: 83b733818f12b726245436b20f41ce8e
+      md5: f3c8638c9d2aa6eb60224409adbd143b
       size: 81563
   sampling:
-    cmd: "lyscripts sample data/cleaned.csv base_graph/C/samples.hdf5 --plots base_graph/C/plots/sampling
+    cmd: "lyscripts sample data/cleaned.csv results/samples.hdf5 --plots plots//sampling
       --pools 0 --modalities max_llh\n"
     deps:
     - path: data/cleaned.csv
       hash: md5
-      md5: 83b733818f12b726245436b20f41ce8e
+      md5: f3c8638c9d2aa6eb60224409adbd143b
       size: 81563
     params:
       params.yaml:
@@ -87,12 +87,9 @@ stages:
             primary:
             - II
             - III
-            - IV
           lnl:
             II: []
-            III:
-            - IV
-            IV: []
+            III: []
         modalities:
           CT:
           - 0.76
@@ -205,25 +202,25 @@ stages:
             trust_threshold: 30.0
             rel_acor_threshold: 0.075
     outs:
-    - path: base_graph/C/plots/sampling/accept_rates.csv
+    - path: plots//sampling/accept_rates.csv
       hash: md5
-      md5: 317d92bb7db39fb687dbe0995b3eb5ff
-      size: 289
-    - path: base_graph/C/plots/sampling/acor_times.csv
+      md5: a3ae4629e59881c055771d9d08a0c135
+      size: 126
+    - path: plots//sampling/acor_times.csv
       hash: md5
-      md5: 879f0e45fcba36688a14e6b1eab5c0e2
-      size: 337
-    - path: base_graph/C/samples.hdf5
+      md5: f782919513e9e11e2b5452cec6699609
+      size: 161
+    - path: results/samples.hdf5
       hash: md5
-      md5: 6de7e925150ce1474471a6557aae9b8d
-      size: 865664
+      md5: 3b72dfdd2cbd78dcc8c3442c4271953e
+      size: 359232
   predict-risks:
-    cmd: "lyscripts predict risks base_graph/C/samples.hdf5 base_graph/C/risks.hdf5\n"
+    cmd: "lyscripts predict risks results/samples.hdf5 results/risks.hdf5\n"
     deps:
-    - path: base_graph/C/samples.hdf5
+    - path: results/samples.hdf5
       hash: md5
-      md5: 6de7e925150ce1474471a6557aae9b8d
-      size: 865664
+      md5: 3b72dfdd2cbd78dcc8c3442c4271953e
+      size: 359232
     params:
       params.yaml:
         graph:
@@ -231,12 +228,9 @@ stages:
             primary:
             - II
             - III
-            - IV
           lnl:
             II: []
-            III:
-            - IV
-            IV: []
+            III: []
         model:
           first_binom_prob: 0.3
           max_t: 10
@@ -250,22 +244,21 @@ stages:
             use_mixing: true
         risks: []
     outs:
-    - path: base_graph/C/risks.hdf5
+    - path: results/risks.hdf5
       hash: md5
       md5: 6781e0baec8d65b9a95a3e879a5098d1
       size: 800
   evaluate:
-    cmd: "lyscripts evaluate data/cleaned.csv base_graph/C/samples.hdf5 --metrics
-      base_graph/C/metrics.json\n"
+    cmd: "lyscripts evaluate data/cleaned.csv results/samples.hdf5 --metrics results/metrics.json\n"
     deps:
-    - path: base_graph/C/samples.hdf5
-      hash: md5
-      md5: 6de7e925150ce1474471a6557aae9b8d
-      size: 865664
     - path: data/cleaned.csv
       hash: md5
-      md5: 83b733818f12b726245436b20f41ce8e
+      md5: f3c8638c9d2aa6eb60224409adbd143b
       size: 81563
+    - path: results/samples.hdf5
+      hash: md5
+      md5: 3b72dfdd2cbd78dcc8c3442c4271953e
+      size: 359232
     params:
       params.yaml:
         graph:
@@ -273,12 +266,9 @@ stages:
             primary:
             - II
             - III
-            - IV
           lnl:
             II: []
-            III:
-            - IV
-            IV: []
+            III: []
         modalities:
           CT:
           - 0.76
@@ -324,7 +314,7 @@ stages:
           - 0.0
           - 1.0076210988534706e-09
           - 3.224387516331105e-08
-          - 2.448519270213933e-07
+          - 2.448519270213932e-07
           - 1.031804005225953e-06
           - 3.148815933917096e-06
           - 7.835261664684588e-06
@@ -391,22 +381,21 @@ stages:
             trust_threshold: 30.0
             rel_acor_threshold: 0.075
     outs:
-    - path: base_graph/C/metrics.json
+    - path: results/metrics.json
       hash: md5
-      md5: b3385aaee86bb6bbcae7e9e8f8d9cb4c
+      md5: 1e4e683472b659eb443afce26693ac49
       size: 90
   predict-prevalences:
-    cmd: "lyscripts predict prevalences base_graph/C/samples.hdf5 data/cleaned.csv
-      base_graph/C/prevalences.hdf5\n"
+    cmd: "lyscripts predict prevalences results/samples.hdf5 data/cleaned.csv results/prevalences.hdf5\n"
     deps:
-    - path: base_graph/C/samples.hdf5
-      hash: md5
-      md5: 6de7e925150ce1474471a6557aae9b8d
-      size: 865664
     - path: data/cleaned.csv
       hash: md5
-      md5: 83b733818f12b726245436b20f41ce8e
+      md5: f3c8638c9d2aa6eb60224409adbd143b
       size: 81563
+    - path: results/samples.hdf5
+      hash: md5
+      md5: 3b72dfdd2cbd78dcc8c3442c4271953e
+      size: 359232
     params:
       params.yaml:
         graph:
@@ -414,12 +403,9 @@ stages:
             primary:
             - II
             - III
-            - IV
           lnl:
             II: []
-            III:
-            - IV
-            IV: []
+            III: []
         model:
           first_binom_prob: 0.3
           max_t: 10
@@ -503,26 +489,26 @@ stages:
               IV: true
           t_stage: late
     outs:
-    - path: base_graph/C/prevalences.hdf5
+    - path: results/prevalences.hdf5
       hash: md5
-      md5: ab0eb02bcd8a3a2ad1753df185198480
-      size: 174720
+      md5: 85dcb0cee48192f18f84aadfc69c97b0
+      size: 110720
   plot-corner:
-    cmd: "lyscripts plot corner base_graph/C/samples.hdf5 base_graph/C/plots/corner.png\n"
+    cmd: "lyscripts plot corner results/samples.hdf5 plots//corner.png\n"
     deps:
-    - path: base_graph/C/samples.hdf5
+    - path: results/samples.hdf5
       hash: md5
-      md5: 6de7e925150ce1474471a6557aae9b8d
-      size: 865664
+      md5: 3b72dfdd2cbd78dcc8c3442c4271953e
+      size: 359232
     outs:
-    - path: base_graph/C/plots/corner.png
+    - path: plots//corner.png
       hash: md5
-      md5: 6e36be284473edb7143b180fd6a29477
-      size: 187955
-    - path: base_graph/C/plots/corner.svg
+      md5: 9471fd6d546f48469ca944b4a4cfd896
+      size: 83219
+    - path: plots//corner.svg
       hash: md5
-      md5: f2a97b72a54b9601541e045b4523810d
-      size: 923685
+      md5: 7e38f524b7322079328fcda4b7412753
+      size: 280865
   filter:
     cmd: "python scripts/filter.py --input data/enhanced.csv --output data/filtered.csv\n"
     deps:

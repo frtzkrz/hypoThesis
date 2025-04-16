@@ -170,7 +170,24 @@ sampling:
 # RISKS:
 # Every entry in this array defines a scenario for which the stage
 # `predict-risk` will compute the risks, given a set of samples
-risks: []
+risks:
+- name: II/N0/early
+  involvement:
+    ipsi: {II: true}
+  given_diagnosis:
+    ipsi:   {II: false, III: false}
+    contra: {II: false, III: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: early
+
+- name: II/N0/late
+  involvement:
+    ipsi: {II: true}
+  given_diagnosis:
+    ipsi:   {II: false, III: false}
+    contra: {II: false, III: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: late
 
 
 ########################################################################################
@@ -182,68 +199,9 @@ risks: []
 # in the data.
 prevalences: 
 - name: healthy/early
-  pattern: {"ipsi": {"II": False, "III": False, "IV": False}}
+  pattern: {"ipsi": {"II": False, "III": False}}
   t_stage: early
 
 - name: healthy/late
-  pattern: {"ipsi": {"II": False, "III": False, "IV": False}}
+  pattern: {"ipsi": {"II": False, "III": False}}
   t_stage: late
-
-- name: II_III/early
-  pattern: {"ipsi": {"II": True, "III": True, "IV": False}}
-  t_stage: early
-
-- name: II_III/late
-  pattern: {"ipsi": {"II": True, "III": True, "IV": False}}
-  t_stage: late
-
-- name: all/early
-  pattern: {"ipsi": {"II": True, "III": True, "IV": True}}
-  t_stage: early
-
-- name: all/late
-  pattern: {"ipsi": {"II": True, "III": True, "IV": True}}
-  t_stage: late
-
-- name: III_IV/early
-  pattern: {"ipsi": {"II": False, "III": True, "IV": True}}
-  t_stage: early
-
-- name: III_IV/late
-  pattern: {"ipsi": {"II": False, "III": True, "IV": True}}
-  t_stage: late
-
-- name: II_IV/early
-  pattern: {"ipsi": {"II": True, "III": False, "IV": True}}
-  t_stage: early
-
-- name: II_IV/late
-  pattern: {"ipsi": {"II": True, "III": False, "IV": True}}
-  t_stage: late
-# - name: healthy/late
-#   pattern: {"ipsi": {"II": False, "III": False}}
-#   t_stage: late
-
-# - name: II/early
-#   pattern: {"ipsi": {"II": True, "III": False}}
-#   t_stage: early
-
-# - name: II/late
-#   pattern: {"ipsi": {"II": True, "III": False}}
-#   t_stage: late
-
-# - name: III/early
-#   pattern: {"ipsi": {"II": False, "III": True}}
-#   t_stage: early
-
-# - name: III/late
-#   pattern: {"ipsi": {"II": False, "III": True}}
-#   t_stage: late
-
-# - name: both/early
-#   pattern: {"ipsi": {"II": True, "III": True}}
-#   t_stage: early
-
-# - name: both/late
-#   pattern: {"ipsi": {"II": True, "III": True}}
-#   t_stage: late
