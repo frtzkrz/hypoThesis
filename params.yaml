@@ -14,12 +14,12 @@ general:
 # graph and how they are connected.
 graph:
   tumor:
-    primary: [II, III, IV]
+    primary: [II, III]
   lnl:
 
     II: []
-    III: [IV]
-    IV: []
+    III: []
+
 
 
 ########################################################################################
