@@ -73,8 +73,8 @@ stages:
       md5: f3c8638c9d2aa6eb60224409adbd143b
       size: 81563
   sampling:
-    cmd: "lyscripts sample data/cleaned.csv results/samples.hdf5 --plots plots//sampling
-      --pools 0 --modalities max_llh\n"
+    cmd: "lyscripts sample data/cleaned.csv results/samples.hdf5 --plots plots/sampling
+      --modalities max_llh\n"
     deps:
     - path: data/cleaned.csv
       hash: md5
@@ -85,12 +85,23 @@ stages:
         graph:
           tumor:
             primary:
+            - I
             - II
             - III
+            - IV
+            - V
+            - VI
+            - VII
           lnl:
-            II: []
+            I: []
+            II:
+            - III
             III:
-            - II
+            - IV
+            IV: []
+            V: []
+            VI: []
+            VII: []
         modalities:
           CT:
           - 0.76
@@ -203,36 +214,47 @@ stages:
             trust_threshold: 30.0
             rel_acor_threshold: 0.075
     outs:
-    - path: plots//sampling/accept_rates.csv
+    - path: plots/sampling/accept_rates.csv
       hash: md5
-      md5: 6581a7e449efaca2e9e4efea5502c4a5
-      size: 155
-    - path: plots//sampling/acor_times.csv
+      md5: a5539d6b7881c067ae1f6cdcca7ec538
+      size: 739
+    - path: plots/sampling/acor_times.csv
       hash: md5
-      md5: 46d9d6dd1dc97b4440890f20b3c937ed
-      size: 184
+      md5: 83b67f1f1de128db543dac98b05d48ac
+      size: 829
     - path: results/samples.hdf5
       hash: md5
-      md5: 232e6260add50305178fedbc586ac420
-      size: 526432
+      md5: 3d91cc4fc35e0793407b904052eb4936
+      size: 2389792
   predict-risks:
     cmd: "lyscripts predict risks results/samples.hdf5 results/risks.hdf5\n"
     deps:
     - path: results/samples.hdf5
       hash: md5
-      md5: 232e6260add50305178fedbc586ac420
-      size: 526432
+      md5: 3d91cc4fc35e0793407b904052eb4936
+      size: 2389792
     params:
       params.yaml:
         graph:
           tumor:
             primary:
+            - I
             - II
             - III
+            - IV
+            - V
+            - VI
+            - VII
           lnl:
-            II: []
+            I: []
+            II:
+            - III
             III:
-            - II
+            - IV
+            IV: []
+            V: []
+            VI: []
+            VII: []
         model:
           first_binom_prob: 0.3
           max_t: 10
@@ -259,19 +281,30 @@ stages:
       size: 81563
     - path: results/samples.hdf5
       hash: md5
-      md5: 232e6260add50305178fedbc586ac420
-      size: 526432
+      md5: 3d91cc4fc35e0793407b904052eb4936
+      size: 2389792
     params:
       params.yaml:
         graph:
           tumor:
             primary:
+            - I
             - II
             - III
+            - IV
+            - V
+            - VI
+            - VII
           lnl:
-            II: []
+            I: []
+            II:
+            - III
             III:
-            - II
+            - IV
+            IV: []
+            V: []
+            VI: []
+            VII: []
         modalities:
           CT:
           - 0.76
@@ -386,8 +419,8 @@ stages:
     outs:
     - path: results/metrics.json
       hash: md5
-      md5: 6a7af6a49df26f338df7da561bfcb50a
-      size: 92
+      md5: 63b3a174620eb24c97b05533f60c21c4
+      size: 89
   predict-prevalences:
     cmd: "lyscripts predict prevalences results/samples.hdf5 data/cleaned.csv results/prevalences.hdf5\n"
     deps:
@@ -397,19 +430,30 @@ stages:
       size: 81563
     - path: results/samples.hdf5
       hash: md5
-      md5: 232e6260add50305178fedbc586ac420
-      size: 526432
+      md5: 3d91cc4fc35e0793407b904052eb4936
+      size: 2389792
     params:
       params.yaml:
         graph:
           tumor:
             primary:
+            - I
             - II
             - III
+            - IV
+            - V
+            - VI
+            - VII
           lnl:
-            II: []
+            I: []
+            II:
+            - III
             III:
-            - II
+            - IV
+            IV: []
+            V: []
+            VI: []
+            VII: []
         model:
           first_binom_prob: 0.3
           max_t: 10
@@ -422,75 +466,93 @@ stages:
             trans_symmetric: true
             use_mixing: true
         prevalences:
-        - name: healthy/early
+        - name: IVoverall/early
           pattern:
             ipsi:
-              II: false
-              III: false
+              IV: true
           t_stage: early
-        - name: healthy/late
+        - name: IVoverall/late
+          pattern:
+            ipsi:
+              IV: true
+          t_stage: late
+        - name: IVnotIII/early
+          pattern:
+            ipsi:
+              III: false
+              IV: true
+          t_stage: early
+        - name: IVnotIII/late
+          pattern:
+            ipsi:
+              III: false
+              IV: true
+          t_stage: late
+        - name: IIIoverall/early
+          pattern:
+            ipsi:
+              III: true
+          t_stage: early
+        - name: IIIoverall/late
+          pattern:
+            ipsi:
+              III: true
+          t_stage: late
+        - name: IIInotII/early
           pattern:
             ipsi:
               II: false
-              III: false
+              III: true
+          t_stage: early
+        - name: IIInotII/late
+          pattern:
+            ipsi:
+              II: false
+              III: true
           t_stage: late
-        - name: II/early
+        - name: IIoverall/early
+          pattern:
+            ipsi:
+              II: true
+          t_stage: early
+        - name: IIoverall/late
+          pattern:
+            ipsi:
+              II: true
+          t_stage: late
+        - name: IInotIII/early
           pattern:
             ipsi:
               II: true
               III: false
           t_stage: early
-        - name: II/late
+        - name: IInotIII/late
           pattern:
             ipsi:
               II: true
               III: false
-          t_stage: late
-        - name: III/early
-          pattern:
-            ipsi:
-              II: false
-              III: true
-          t_stage: early
-        - name: III/late
-          pattern:
-            ipsi:
-              II: false
-              III: true
-          t_stage: late
-        - name: II_III/early
-          pattern:
-            ipsi:
-              II: false
-              III: true
-          t_stage: early
-        - name: II_III/late
-          pattern:
-            ipsi:
-              II: false
-              III: true
           t_stage: late
     outs:
     - path: results/prevalences.hdf5
       hash: md5
-      md5: e7d1b0fa85dc09184b4f91cd131b63ca
-      size: 115168
+      md5: fcaaaccb131dfecdae219cf2a0fbe0d1
+      size: 400768
   plot-corner:
-    cmd: "lyscripts plot corner results/samples.hdf5 plots//corner.png\n"
+    cmd: "lyscripts plot corner results/samples.hdf5 plots/corner.png\n"
     deps:
     - path: results/samples.hdf5
       hash: md5
-      md5: 232e6260add50305178fedbc586ac420
-      size: 526432
+      md5: 3d91cc4fc35e0793407b904052eb4936
+      size: 2389792
     outs:
-    - path: plots//corner.png
+    - path: plots/corner.png
       hash: md5
-      md5: f46bc65758ac29bf66a5acf44729c39e
-      size: 156124
-    - path: plots//corner.svg
+      md5: a07b057e6d7e33d7e7f6a541ab9a2df6
+      size: 807284
+    - path: plots/corner.svg
       hash: md5
-      md5: 8554c72bd471d96c399e2cd5c80b588d
-      size: 561586
+      md5: 445a4acccc0fa33c7ac6bacbfe001754
+      size: 5428844
   filter:
     cmd: "python scripts/filter.py --input data/enhanced.csv --output data/filtered.csv\n"
     deps:

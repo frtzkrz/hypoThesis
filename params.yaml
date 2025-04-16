@@ -6,7 +6,7 @@ general:
   risks: results/risks.hdf5
   prevalences: results/prevalences.hdf5
   metrics: results/metrics.json
-  plots_dir: plots/
+  plots_dir: plots
 
 
 ########################################################################################
@@ -14,11 +14,15 @@ general:
 # graph and how they are connected.
 graph:
   tumor:
-    primary: [II, III]
+    primary: [I, II, III, IV, V, VI, VII]
   lnl:
-
-    II: []
-    III: [II]
+    I: []
+    II: [III]
+    III: [IV]
+    IV: []
+    V: []
+    VI: []
+    VII: []
 
 
 
@@ -181,34 +185,44 @@ risks: []
 # diagnostic modality. It can, however, be compared to the prevalence
 # in the data.
 prevalences: 
-- name: healthy/early
-  pattern: {"ipsi": {"II": False, "III": False}}
+- name: IVoverall/early
+  pattern: {"ipsi": {"IV": True}}
   t_stage: early
-
-- name: healthy/late
-  pattern: {"ipsi": {"II": False, "III": False}}
+- name: IVoverall/late
+  pattern: {"ipsi": {"IV": True}}
   t_stage: late
 
-- name: II/early
+- name: IVnotIII/early
+  pattern: {"ipsi": {"III": False, "IV": True}}
+  t_stage: early
+- name: IVnotIII/late
+  pattern: {"ipsi": {"III": False, "IV": True}}
+  t_stage: late
+
+- name: IIIoverall/early
+  pattern: {"ipsi": {"III": True}}
+  t_stage: early
+- name: IIIoverall/late
+  pattern: {"ipsi": {"III": True}}
+  t_stage: late
+
+- name: IIInotII/early
+  pattern: {"ipsi": {"II": False, "III": True}}
+  t_stage: early
+- name: IIInotII/late
+  pattern: {"ipsi": {"II": False, "III": True}}
+  t_stage: late
+
+- name: IIoverall/early
+  pattern: {"ipsi": {"II": True}}
+  t_stage: early
+- name: IIoverall/late
+  pattern: {"ipsi": {"II": True}}
+  t_stage: late
+
+- name: IInotIII/early
   pattern: {"ipsi": {"II": True, "III": False}}
   t_stage: early
-
-- name: II/late
+- name: IInotIII/late
   pattern: {"ipsi": {"II": True, "III": False}}
-  t_stage: late
-
-- name: III/early
-  pattern: {"ipsi": {"II": False, "III": True}}
-  t_stage: early
-
-- name: III/late
-  pattern: {"ipsi": {"II": False, "III": True}}
-  t_stage: late
-
-- name: II_III/early
-  pattern: {"ipsi": {"II": False, "III": True}}
-  t_stage: early
-
-- name: II_III/late
-  pattern: {"ipsi": {"II": False, "III": True}}
   t_stage: late
