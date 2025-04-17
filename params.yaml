@@ -16,10 +16,10 @@ graph:
   tumor:
     primary: [I, II, III, IV, V, VI, VII]
   lnl:
-    I: []
+    I: [II]
     II: [III]
-    III: [IV, V]
-    IV: []
+    III: [IV]
+    IV: [V]
     V: []
     VI: []
     VII: []
@@ -184,44 +184,38 @@ risks: []
 # diagnostic modality. It can, however, be compared to the prevalence
 # in the data.
 prevalences: 
-- name: Voverall/early
-  pattern: {"ipsi": {"V": True}}
+
+- name: Ioverall/early
+  pattern: {"ipsi": {"I": True}}
   t_stage: early
-- name: Voverall/late
-  pattern: {"ipsi": {"V": True}}
+- name: Ioverall/late
+  pattern: {"ipsi": {"I": True}}
   t_stage: late
 
-- name: VnotII/early
-  pattern: {"ipsi": {"II": False, "V": True}}
+- name: IIoverall/early
+  pattern: {"ipsi": {"II": True}}
   t_stage: early
-- name: VnotII/late
-  pattern: {"ipsi": {"II": False, "V": True}}
+- name: IIoverall/late
+  pattern: {"ipsi": {"II": True}}
   t_stage: late
 
-- name: VnotIII/early
-  pattern: {"ipsi": {"III": False, "V": True}}
+- name: InotII/early
+  pattern: {"ipsi": {"I": True, "II": False}}
   t_stage: early
-- name: VnotIII/late
-  pattern: {"ipsi": {"III": False, "V": True}}
+- name: InotII/late
+  pattern: {"ipsi": {"I": True, "II": False}}
   t_stage: late
 
-- name: VnotIV/early
-  pattern: {"ipsi": {"IV": False, "V": True}}
+- name: IInotI/early
+  pattern: {"ipsi": {"I": False, "II": True}}
   t_stage: early
-- name: VnotIV/late
-  pattern: {"ipsi": {"IV": False, "V": True}}
+- name: IInotI/late
+  pattern: {"ipsi": {"I": False, "II": True}}
   t_stage: late
 
-- name: VnotII_IV/early
-  pattern: {"ipsi": {"II": False, "IV": False, "V": True}}
+- name: IandII/early
+  pattern: {"ipsi": {"I": True, "II": True}}
   t_stage: early
-- name: VnotII_IV/late
-  pattern: {"ipsi": {"II": False, "IV": False, "V": True}}
-  t_stage: late
-
-- name: VnotIII_IV/early
-  pattern: {"ipsi": {"III": False, "IV": False, "V": True}}
-  t_stage: early
-- name: VnotIII_IV/late
-  pattern: {"ipsi": {"III": False, "IV": False, "V": True}}
+- name: IandII/late
+  pattern: {"ipsi": {"I": True, "II": True}}
   t_stage: late

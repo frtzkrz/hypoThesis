@@ -93,13 +93,14 @@ stages:
             - VI
             - VII
           lnl:
-            I: []
+            I:
+            - II
             II:
             - III
             III:
             - IV
+            IV:
             - V
-            IV: []
             V: []
             VI: []
             VII: []
@@ -217,23 +218,23 @@ stages:
     outs:
     - path: plots/sampling/accept_rates.csv
       hash: md5
-      md5: 4d5756c0948fc3c332e35c3a30ed93d7
-      size: 969
+      md5: 0a0142d5eefecadeb574f30938e77fd6
+      size: 982
     - path: plots/sampling/acor_times.csv
       hash: md5
-      md5: 31e5165f2e8cda9fa28a32c82e51478e
-      size: 975
+      md5: a82679a82fef01b2a4c2330b045002db
+      size: 951
     - path: results/samples.hdf5
       hash: md5
-      md5: 57557265618b44b8abea27ac24e34ca5
-      size: 3122240
+      md5: 49fd9fd600ea7426c5871d83b502dd12
+      size: 3215712
   predict-risks:
     cmd: "lyscripts predict risks results/samples.hdf5 results/risks.hdf5\n"
     deps:
     - path: results/samples.hdf5
       hash: md5
-      md5: 57557265618b44b8abea27ac24e34ca5
-      size: 3122240
+      md5: 49fd9fd600ea7426c5871d83b502dd12
+      size: 3215712
     params:
       params.yaml:
         graph:
@@ -247,13 +248,14 @@ stages:
             - VI
             - VII
           lnl:
-            I: []
+            I:
+            - II
             II:
             - III
             III:
             - IV
+            IV:
             - V
-            IV: []
             V: []
             VI: []
             VII: []
@@ -283,8 +285,8 @@ stages:
       size: 81563
     - path: results/samples.hdf5
       hash: md5
-      md5: 57557265618b44b8abea27ac24e34ca5
-      size: 3122240
+      md5: 49fd9fd600ea7426c5871d83b502dd12
+      size: 3215712
     params:
       params.yaml:
         graph:
@@ -298,13 +300,14 @@ stages:
             - VI
             - VII
           lnl:
-            I: []
+            I:
+            - II
             II:
             - III
             III:
             - IV
+            IV:
             - V
-            IV: []
             V: []
             VI: []
             VII: []
@@ -353,7 +356,7 @@ stages:
           - 0.0
           - 1.0076210988534706e-09
           - 3.224387516331105e-08
-          - 2.448519270213933e-07
+          - 2.448519270213932e-07
           - 1.031804005225953e-06
           - 3.148815933917096e-06
           - 7.835261664684588e-06
@@ -422,7 +425,7 @@ stages:
     outs:
     - path: results/metrics.json
       hash: md5
-      md5: 11da1c4e3c007c29c7df3e62b3a15449
+      md5: 9c57c1ccdf55ba775ad1fdbfcd48bb9a
       size: 90
   predict-prevalences:
     cmd: "lyscripts predict prevalences results/samples.hdf5 data/cleaned.csv results/prevalences.hdf5\n"
@@ -433,8 +436,8 @@ stages:
       size: 81563
     - path: results/samples.hdf5
       hash: md5
-      md5: 57557265618b44b8abea27ac24e34ca5
-      size: 3122240
+      md5: 49fd9fd600ea7426c5871d83b502dd12
+      size: 3215712
     params:
       params.yaml:
         graph:
@@ -448,13 +451,14 @@ stages:
             - VI
             - VII
           lnl:
-            I: []
+            I:
+            - II
             II:
             - III
             III:
             - IV
+            IV:
             - V
-            IV: []
             V: []
             VI: []
             VII: []
@@ -470,101 +474,83 @@ stages:
             trans_symmetric: true
             use_mixing: true
         prevalences:
-        - name: Voverall/early
+        - name: Ioverall/early
           pattern:
             ipsi:
-              V: true
+              I: true
           t_stage: early
-        - name: Voverall/late
+        - name: Ioverall/late
           pattern:
             ipsi:
-              V: true
+              I: true
           t_stage: late
-        - name: VnotII/early
+        - name: IIoverall/early
           pattern:
             ipsi:
+              II: true
+          t_stage: early
+        - name: IIoverall/late
+          pattern:
+            ipsi:
+              II: true
+          t_stage: late
+        - name: InotII/early
+          pattern:
+            ipsi:
+              I: true
               II: false
-              V: true
           t_stage: early
-        - name: VnotII/late
+        - name: InotII/late
           pattern:
             ipsi:
+              I: true
               II: false
-              V: true
           t_stage: late
-        - name: VnotIII/early
+        - name: IInotI/early
           pattern:
             ipsi:
-              III: false
-              V: true
+              I: false
+              II: true
           t_stage: early
-        - name: VnotIII/late
+        - name: IInotI/late
           pattern:
             ipsi:
-              III: false
-              V: true
+              I: false
+              II: true
           t_stage: late
-        - name: VnotIV/early
+        - name: IandII/early
           pattern:
             ipsi:
-              IV: false
-              V: true
+              I: true
+              II: true
           t_stage: early
-        - name: VnotIV/late
+        - name: IandII/late
           pattern:
             ipsi:
-              IV: false
-              V: true
-          t_stage: late
-        - name: VnotII_IV/early
-          pattern:
-            ipsi:
-              II: false
-              IV: false
-              V: true
-          t_stage: early
-        - name: VnotII_IV/late
-          pattern:
-            ipsi:
-              II: false
-              IV: false
-              V: true
-          t_stage: late
-        - name: VnotIII_IV/early
-          pattern:
-            ipsi:
-              III: false
-              IV: false
-              V: true
-          t_stage: early
-        - name: VnotIII_IV/late
-          pattern:
-            ipsi:
-              III: false
-              IV: false
-              V: true
+              I: true
+              II: true
           t_stage: late
     outs:
     - path: results/prevalences.hdf5
       hash: md5
-      md5: f1d9a7f6a5500bdd9618da21d559463c
-      size: 439168
+      md5: 04dae5025bc21532a342d39633bdd3d6
+      size: 398720
   plot-corner:
     cmd: "lyscripts plot corner results/samples.hdf5 plots/corner.png\n"
     deps:
     - path: results/samples.hdf5
       hash: md5
-      md5: 57557265618b44b8abea27ac24e34ca5
-      size: 3122240
+      md5: 49fd9fd600ea7426c5871d83b502dd12
+      size: 3215712
     outs:
     - path: plots/corner.png
       hash: md5
-      md5: c27ada36abc61c66fe1535c57614707d
-      size: 896242
+      md5: 1718a4f3932eae49c035849f922e93e9
+      size: 1120983
     - path: plots/corner.svg
       hash: md5
-      md5: a5b99c92606d3c08610c9bd46a7737e8
-      size: 5274146
+      md5: 18fa68f3718db5438157ba3dd67b0154
+      size: 6474384
   filter:
     cmd: "python scripts/filter.py --input data/enhanced.csv --output data/filtered.csv\n"
     deps:
