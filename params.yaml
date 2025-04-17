@@ -184,38 +184,58 @@ risks: []
 # diagnostic modality. It can, however, be compared to the prevalence
 # in the data.
 prevalences: 
-
-- name: Ioverall/early
-  pattern: {"ipsi": {"I": True}}
+- name: VIoverall/early
+  pattern: {"ipsi": {"VI": True}}
   t_stage: early
-- name: Ioverall/late
-  pattern: {"ipsi": {"I": True}}
+- name: VIoverall/late
+  pattern: {"ipsi": {"VI": True}}
   t_stage: late
 
-- name: IIoverall/early
-  pattern: {"ipsi": {"II": True}}
+- name: VIIoverall/early
+  pattern: {"ipsi": {"VII": True}}
   t_stage: early
-- name: IIoverall/late
-  pattern: {"ipsi": {"II": True}}
+- name: VIIoverall/late
+  pattern: {"ipsi": {"VII": True}}
   t_stage: late
 
-- name: InotII/early
-  pattern: {"ipsi": {"I": True, "II": False}}
+- name: VIInotII/early
+  pattern: {"ipsi": {"II": False, "VII": True}}
   t_stage: early
-- name: InotII/late
-  pattern: {"ipsi": {"I": True, "II": False}}
+- name: VIInotII/late
+  pattern: {"ipsi": {"II": False, "VII": True}}
   t_stage: late
 
-- name: IInotI/early
-  pattern: {"ipsi": {"I": False, "II": True}}
+- name: VIInotIII/early
+  pattern: {"ipsi": {"III": False, "VII": True}}
   t_stage: early
-- name: IInotI/late
-  pattern: {"ipsi": {"I": False, "II": True}}
+- name: VIInotIII/late
+  pattern: {"ipsi": {"III": False, "VII": True}}
   t_stage: late
 
-- name: IandII/early
-  pattern: {"ipsi": {"I": True, "II": True}}
+- name: VInotII/early
+  pattern: {"ipsi": {"II": False, "VI": True}}
   t_stage: early
-- name: IandII/late
-  pattern: {"ipsi": {"I": True, "II": True}}
+- name: VInotII/late
+  pattern: {"ipsi": {"II": False, "VI": True}}
+  t_stage: late
+
+- name: VInotIII/early
+  pattern: {"ipsi": {"III": False, "VI": True}}
+  t_stage: early
+- name: VInotIII/late
+  pattern: {"ipsi": {"III": False, "VI": True}}
+  t_stage: late
+
+- name: VIInotVI/early
+  pattern: {"ipsi": {"VI": False, "VII": True}}
+  t_stage: early
+- name: VIInotVI/late
+  pattern: {"ipsi": {"VI": False, "VII": True}}
+  t_stage: late
+
+- name: VInotVII/early
+  pattern: {"ipsi": {"VI": True, "VII": False}}
+  t_stage: early
+- name: VInotVII/late
+  pattern: {"ipsi": {"VI": True, "VII": False}}
   t_stage: late

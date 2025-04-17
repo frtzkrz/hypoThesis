@@ -474,67 +474,103 @@ stages:
             trans_symmetric: true
             use_mixing: true
         prevalences:
-        - name: Ioverall/early
+        - name: VIoverall/early
           pattern:
             ipsi:
-              I: true
+              VI: true
           t_stage: early
-        - name: Ioverall/late
+        - name: VIoverall/late
           pattern:
             ipsi:
-              I: true
+              VI: true
           t_stage: late
-        - name: IIoverall/early
+        - name: VIIoverall/early
           pattern:
             ipsi:
-              II: true
+              VII: true
           t_stage: early
-        - name: IIoverall/late
+        - name: VIIoverall/late
           pattern:
             ipsi:
-              II: true
+              VII: true
           t_stage: late
-        - name: InotII/early
+        - name: VIInotII/early
           pattern:
             ipsi:
-              I: true
               II: false
+              VII: true
           t_stage: early
-        - name: InotII/late
+        - name: VIInotII/late
           pattern:
             ipsi:
-              I: true
               II: false
+              VII: true
           t_stage: late
-        - name: IInotI/early
+        - name: VIInotIII/early
           pattern:
             ipsi:
-              I: false
-              II: true
+              III: false
+              VII: true
           t_stage: early
-        - name: IInotI/late
+        - name: VIInotIII/late
           pattern:
             ipsi:
-              I: false
-              II: true
+              III: false
+              VII: true
           t_stage: late
-        - name: IandII/early
+        - name: VInotII/early
           pattern:
             ipsi:
-              I: true
-              II: true
+              II: false
+              VI: true
           t_stage: early
-        - name: IandII/late
+        - name: VInotII/late
           pattern:
             ipsi:
-              I: true
-              II: true
+              II: false
+              VI: true
+          t_stage: late
+        - name: VInotIII/early
+          pattern:
+            ipsi:
+              III: false
+              VI: true
+          t_stage: early
+        - name: VInotIII/late
+          pattern:
+            ipsi:
+              III: false
+              VI: true
+          t_stage: late
+        - name: VIInotVI/early
+          pattern:
+            ipsi:
+              VI: false
+              VII: true
+          t_stage: early
+        - name: VIInotVI/late
+          pattern:
+            ipsi:
+              VI: false
+              VII: true
+          t_stage: late
+        - name: VInotVII/early
+          pattern:
+            ipsi:
+              VI: true
+              VII: false
+          t_stage: early
+        - name: VInotVII/late
+          pattern:
+            ipsi:
+              VI: true
+              VII: false
           t_stage: late
     outs:
     - path: results/prevalences.hdf5
       hash: md5
-      md5: f5aa0e3af9fdaaa63adf45706ba87a60
-      size: 398720
+      md5: 7ec0740ffa595da0ab49798f4dae9135
+      size: 635264
   plot-corner:
     cmd: "lyscripts plot corner results/samples.hdf5 plots/corner.png\n"
     deps:
