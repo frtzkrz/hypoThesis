@@ -173,7 +173,222 @@ sampling:
 # RISKS:
 # Every entry in this array defines a scenario for which the stage
 # `predict-risk` will compute the risks, given a set of samples
-risks: []
+risks: 
+
+- name: III/N0/early
+  involvement:
+    ipsi: {III: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: false, III: false, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: false, III: false, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: early
+
+- name: III/N0/late
+  involvement:
+    ipsi: {III: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: false, III: false, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: false, III: false, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: late
+
+- name: III/II/early
+  involvement:
+    ipsi: {III: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: true, III: false, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: true, III: false, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: early
+
+- name: III/II/late
+  involvement:
+    ipsi: {III: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: true, III: false, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: true, III: false, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: late
+
+
+
+- name: IV/N0/early
+  involvement:
+    ipsi: {IV: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: false, III: false, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: false, III: false, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: early
+
+- name: IV/N0/late
+  involvement:
+    ipsi: {IV: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: false, III: false, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: false, III: false, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: late
+
+- name: IV/II/early
+  involvement:
+    ipsi: {IV: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: true, III: false, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: true, III: false, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: early
+
+- name: IV/II/late
+  involvement:
+    ipsi: {IV: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: true, III: false, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: true, III: false, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: late
+
+- name: IV/III/early
+  involvement:
+    ipsi: {IV: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: false, III: true, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: false, III: true, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: early
+
+- name: IV/III/late
+  involvement:
+    ipsi: {IV: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: false, III: true, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: false, III: true, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: late
+
+- name: IV/II_III/early
+  involvement:
+    ipsi: {IV: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: true, III: true, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: true, III: true, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: early
+
+- name: IV/II_III/late
+  involvement:
+    ipsi: {IV: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: true, III: true, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: true, III: true, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: late
+
+
+- name: V/N0/early
+  involvement:
+    ipsi: {V: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: false, III: false, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: false, III: false, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: early
+- name: V/N0/late
+  involvement:
+    ipsi: {V: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: false, III: false, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: false, III: false, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: late
+
+- name: V/II/early
+  involvement:
+    ipsi: {V: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: true, III: false, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: true, III: false, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: early
+- name: V/II/late
+  involvement:
+    ipsi: {V: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: true, III: false, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: true, III: false, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: late
+
+- name: V/III/early
+  involvement:
+    ipsi: {V: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: false, III: true, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: false, III: true, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: early
+- name: V/III/late
+  involvement:
+    ipsi: {V: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: false, III: true, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: false, III: true, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: late
+
+- name: V/IV/early
+  involvement:
+    ipsi: {V: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: false, III: false, IV: true, V: false, VI: false, VII: false}
+    contra: {I: false, II: false, III: false, IV: true, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: early
+- name: V/IV/late
+  involvement:
+    ipsi: {V: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: false, III: false, IV: true, V: false, VI: false, VII: false}
+    contra: {I: false, II: false, III: false, IV: true, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: late
+
+
+- name: V/II_III/early
+  involvement:
+    ipsi: {V: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: true, III: true, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: true, III: true, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: early
+- name: V/II_III/late
+  involvement:
+    ipsi: {V: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: true, III: true, IV: false, V: false, VI: false, VII: false}
+    contra: {I: false, II: true, III: true, IV: false, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: late
+
+- name: V/II_III_IV/early
+  involvement:
+    ipsi: {V: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: true, III: true, IV: true, V: false, VI: false, VII: false}
+    contra: {I: false, II: true, III: true, IV: true, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: early
+
+- name: V/II_III_IV/late
+  involvement:
+    ipsi: {V: true}
+  given_diagnosis:
+    ipsi:   {I: false, II: true, III: true, IV: true, V: false, VI: false, VII: false}
+    contra: {I: false, II: true, III: true, IV: true, V: false, VI: false, VII: false}
+  given_diagnosis_spsn: [0.76, 0.81]
+  t_stage: late
 
 
 ########################################################################################
