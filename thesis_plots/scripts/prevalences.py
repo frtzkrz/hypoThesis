@@ -20,7 +20,7 @@ for tag in ["ex_A_prevalences", "ex_B_prevalences", "ex_C_prevalences"]:
 
 modelnames = [name for name in MODELS.keys()]
 
-filename = 'ex_1'
+filename = 'ex_2'
 
 # define USZ colors
 COLORS = {
@@ -31,7 +31,7 @@ COLORS = {
     # "gray": '#c5d5db',
 }
 COLOR_CYCLE = cycle(COLORS.values())
-BINS = np.linspace(0., 40., 200)
+BINS = np.linspace(0., 50., 200)
 HIST_KWARGS = {
     "density": True,
     "bins": BINS,
@@ -39,10 +39,10 @@ HIST_KWARGS = {
     "alpha": 0.7,
 }
 SCENARIO_DICT = {
-    #"healthy": "all LNLs healthy",
-    "II": "only LNL II involved",
-    "III": "only LNL III involved",
-    #"II_III": "both LNLs involved"
+    "healthy": "all LNLs healthy",
+    #"II": "only LNL II involved",
+    #"III": "only LNL III involved",
+    "II_III": "both LNLs involved"
 }
 scenario_names = [name for name in SCENARIO_DICT.keys()]
 
