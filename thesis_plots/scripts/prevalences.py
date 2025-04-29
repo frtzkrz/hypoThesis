@@ -20,7 +20,7 @@ for tag in ["VI_VII_A_prevalences", "VI_VII_B_prevalences", "VI_VII_D_prevalence
 
 modelnames = [name for name in MODELS.keys()]
 
-filename = 'VI_VII_1'
+filename = 'VI_VII_2'
 
 # define USZ colors
 COLORS = {
@@ -40,8 +40,8 @@ HIST_KWARGS = {
 }
 
 SCENARIO_DICT = {
-    "VIIoverall": "VII overall",
-    "VIInotII": "VII w/o II",
+    "VIoverall": "VI overall",
+    "VInotII": "VI w/o II",
 }
 scenario_names = [name for name in SCENARIO_DICT.keys()]
 
