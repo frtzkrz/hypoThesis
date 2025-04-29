@@ -20,7 +20,7 @@ for tag in ["I_A_prevalences", "I_B_prevalences", "I_C_prevalences"]:
 
 modelnames = [name for name in MODELS.keys()]
 
-filename = 'I_1'
+filename = 'I_2'
 
 # define USZ colors
 COLORS = {
@@ -31,18 +31,17 @@ COLORS = {
     # "gray": '#c5d5db',
 }
 COLOR_CYCLE = cycle(COLORS.values())
-BINS = np.linspace(0., 14., 200)
+BINS = np.linspace(35., 85., 200)
 HIST_KWARGS = {
     "density": True,
     "bins": BINS,
     "histtype": "stepfilled",
     "alpha": 0.7,
 }
-['Ioverall','InotII', 'IInotI', 'IIoverall', 'IandII', ]
 
 SCENARIO_DICT = {
-    "Ioverall": "I overall",
-    "InotII": "I w/o II",
+    "IIoverall": "II overall",
+    "IInotI": "II w/o I",
 }
 scenario_names = [name for name in SCENARIO_DICT.keys()]
 
@@ -52,7 +51,7 @@ if __name__ == "__main__":
     fig, ax = plt.subplot_mosaic(
         [[f'{modelname}/early', f'{modelname}/late'] for modelname in MODELS.keys()],
         sharex=True, sharey=True,
-        figsize=(6.299212598425196, 3.893209269731271*1.25),
+        figsize=lyhist.get_size(width="full"),
     )
 
     for i, (modelname, filepath) in enumerate(MODELS.items()):
@@ -85,7 +84,7 @@ if __name__ == "__main__":
                         color=color,
                     )
 
-                    ax[axname].set_ylim(0., 0.90)
+                    ax[axname].set_ylim(0., 0.25)
                     if stage == "early":
                         ax[axname].set_ylabel(ylabel)
 
