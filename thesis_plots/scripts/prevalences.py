@@ -15,19 +15,23 @@ import lyscripts.plot.histograms as lyhist
 
 # Specify models and respective data source locations
 MODELS = {}
-for tag in ["nocon", "IItoIII", "IIItoII", "both"]:
-    MODELS[tag] = Path(f"../data/simple-{tag}-v1-prevalences.hdf5")
+for tag in ["ex_A_prevalences", "ex_B_prevalences", "ex_C_prevalences"]:
+    MODELS[tag] = Path(f"thesis_plots/graph_results/prevalences/{tag}.hdf5")
+
+modelnames = [name for name in MODELS.keys()]
+
+filename = 'ex_1'
 
 # define USZ colors
 COLORS = {
     "green": '#00afa5',
     "orange": '#f17900',
-    "blue": '#005ea8',
-    "red": '#ae0060',
+    #"blue": '#005ea8',
+    #"red": '#ae0060',
     # "gray": '#c5d5db',
 }
 COLOR_CYCLE = cycle(COLORS.values())
-BINS = np.linspace(0., 55., 200)
+BINS = np.linspace(0., 40., 200)
 HIST_KWARGS = {
     "density": True,
     "bins": BINS,
@@ -35,29 +39,26 @@ HIST_KWARGS = {
     "alpha": 0.7,
 }
 SCENARIO_DICT = {
-    "healthy": "all LNLs healthy",
-    "II": "LNL II involved",
-    "III": "LNL III involved",
-    "both": "both LNLs involved"
+    #"healthy": "all LNLs healthy",
+    "II": "only LNL II involved",
+    "III": "only LNL III involved",
+    #"II_III": "both LNLs involved"
 }
-
+scenario_names = [name for name in SCENARIO_DICT.keys()]
 
 if __name__ == "__main__":
-    plt.style.use(Path("../../../.mplstyle"))
+    plt.style.use(Path(".mplstyle"))
 
-    fig, ax = plt.subplot_mosaic([
-        ["nocon/early"  , "nocon/late"  ],
-        ["IItoIII/early", "IItoIII/late"],
-        ["IIItoII/early", "IIItoII/late"],
-        ["both/early"   , "both/late"   ],
-    ],
+    fig, ax = plt.subplot_mosaic(
+        [[f'{modelname}/early', f'{modelname}/late'] for modelname in MODELS.keys()],
         sharex=True, sharey=True,
         figsize=lyhist.get_size(width="full"),
     )
 
     for i, (modelname, filepath) in enumerate(MODELS.items()):
+        ylabel = modelname.split("_")[1]
         with h5py.File(name=filepath, mode="r") as h5_file:
-            for scenario in ["healthy", "II", "III", "both"]:
+            for scenario in scenario_names:
                 color = next(COLOR_CYCLE)
                 for stage in ["early", "late"]:
                     axname = f"{modelname}/{stage}"
@@ -84,16 +85,16 @@ if __name__ == "__main__":
                         color=color,
                     )
 
-                    ax[axname].set_ylim(0., 0.59)
+                    ax[axname].set_ylim(0., 0.40)
                     if stage == "early":
-                        ax[axname].set_ylabel(f"graph no. {i+1}")
+                        ax[axname].set_ylabel(ylabel)
 
-    ax["nocon/early"].legend(fontsize=6.0, ncol=2)
-    ax["nocon/late"].legend(fontsize=6.0, ncol=2)
+    ax[f"{modelnames[0]}/early"].legend(fontsize=6.0, ncol=2)
+    ax[f"{modelnames[0]}/late"].legend(fontsize=6.0, ncol=2)
 
-    ax["both/early"].set_xlim(left=BINS[0], right=BINS[-1])
-    ax["both/late"].set_xlim(left=BINS[0], right=BINS[-1])
-    ax["both/early"].set_xlabel("early T-category prevalences [%]")
-    ax["both/late"].set_xlabel("late T-category prevalences [%]")
+    ax[f"{modelnames[-1]}/early"].set_xlim(left=BINS[0], right=BINS[-1])
+    ax[f"{modelnames[-1]}/late"].set_xlim(left=BINS[0], right=BINS[-1])
+    ax[f"{modelnames[-1]}/early"].set_xlabel("early T-category prevalences [%]")
+    ax[f"{modelnames[-1]}/late"].set_xlabel("late T-category prevalences [%]")
 
-    plt.savefig("simple-prevalences.svg")
+    plt.savefig(f"thesis_plots/plots/prevalences/{filename}.png", dpi=300)
