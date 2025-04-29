@@ -15,35 +15,34 @@ import lyscripts.plot.histograms as lyhist
 
 # Specify models and respective data source locations
 MODELS = {}
-for tag in ["V_A_prevalences", "V_B_prevalences", "V_D_prevalences", "V_F_prevalences"]:
+for tag in ["I_A_prevalences", "I_B_prevalences", "I_C_prevalences"]:
     MODELS[tag] = Path(f"thesis_plots/graph_results/prevalences/{tag}.hdf5")
 
 modelnames = [name for name in MODELS.keys()]
 
-filename = 'V'
+filename = 'I_1'
 
 # define USZ colors
 COLORS = {
     "green": '#00afa5',
     "orange": '#f17900',
-    "blue": '#005ea8',
+    #"blue": '#005ea8',
     #"red": '#ae0060',
     # "gray": '#c5d5db',
 }
 COLOR_CYCLE = cycle(COLORS.values())
-BINS = np.linspace(0., 20., 200)
+BINS = np.linspace(0., 14., 200)
 HIST_KWARGS = {
     "density": True,
     "bins": BINS,
     "histtype": "stepfilled",
     "alpha": 0.7,
 }
-['Voverall', 'VnotIII', 'VnotIV']
-SCENARIO_DICT = {
-    "Voverall": "V overall",
-    "VnotIII": "V w/o III",
-    "VnotIV": "V w/o IV",
+['Ioverall','InotII', 'IInotI', 'IIoverall', 'IandII', ]
 
+SCENARIO_DICT = {
+    "Ioverall": "I overall",
+    "InotII": "I w/o II",
 }
 scenario_names = [name for name in SCENARIO_DICT.keys()]
 
@@ -86,7 +85,7 @@ if __name__ == "__main__":
                         color=color,
                     )
 
-                    ax[axname].set_ylim(0., 0.80)
+                    ax[axname].set_ylim(0., 0.90)
                     if stage == "early":
                         ax[axname].set_ylabel(ylabel)
 
