@@ -20,18 +20,18 @@ for tag in ["base_A_prevalences", "base_B_prevalences", "base_D_prevalences"]:
 
 modelnames = [name for name in MODELS.keys()]
 
-filename = 'base_1'
+filename = 'base_2'
 
 # define USZ colors
 COLORS = {
     "green": '#00afa5',
     "orange": '#f17900',
-    "blue": '#005ea8',
-    "red": '#ae0060',
+    #"blue": '#005ea8',
+    #"red": '#ae0060',
     # "gray": '#c5d5db',
 }
 COLOR_CYCLE = cycle(COLORS.values())
-BINS = np.linspace(0., 80., 200)
+BINS = np.linspace(0., 35., 200)
 HIST_KWARGS = {
     "density": True,
     "bins": BINS,
@@ -40,10 +40,9 @@ HIST_KWARGS = {
 }
 ['IIInotII', 'IIIoverall', 'IInotIII', 'IIoverall', 'IVnotIII', 'IVoverall']
 SCENARIO_DICT = {
-    "IIoverall": "II overall",
-    "IIIoverall": "III overall",
-    "IIInotII": "III w/o II",
-    "IInotIII": "II w/o III",
+    "IVoverall": "IV overall",
+    "IVnotIII": "IV w/o III",
+
 }
 scenario_names = [name for name in SCENARIO_DICT.keys()]
 
@@ -86,7 +85,7 @@ if __name__ == "__main__":
                         color=color,
                     )
 
-                    ax[axname].set_ylim(0., 0.35)
+                    ax[axname].set_ylim(0., 0.45)
                     if stage == "early":
                         ax[axname].set_ylabel(ylabel)
 
