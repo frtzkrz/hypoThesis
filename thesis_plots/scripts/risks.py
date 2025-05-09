@@ -7,82 +7,52 @@ import matplotlib.pyplot as plt
 
 import numpy as np
 import lyscripts.plot.histograms as lyhist
+import h5py as h5
 
 from _utils import Histogram, Posterior, draw
 
 
-DATA_DIR = Path("thesis_plots/graph_results/risks")
+filename = Path("thesis_plots/graph_results/risks/risks.hdf5")
 USZ_COLORS = {
     "blue": '#005ea8',
-    "green": '#00afa5',
+    #"green": '#00afa5',
     "orange": '#f17900',
-    "red": '#ae0060',
-    "gray": '#c5d5db',
+    #"red": '#ae0060',
+    #"gray": '#c5d5db',
 }
 
 
 if __name__ == "__main__":
     plt.style.use(Path(".mplstyle"))
 
-    fig, ax = plt.subplots(figsize=lyhist.get_size(width="full", ratio=2.))
+    fig, axes = plt.subplot_mosaic(
+        [['N0', 'II']],
+        figsize=lyhist.get_size(width="full", ratio=4),
+        sharey=True,
+        layout="constrained",
+        )
 
-    plots = []
-    plots.append(Histogram(
-        filename=DATA_DIR / "complete-v1-ipsiIV-risks.hdf5",
-        dataname="ipsi/IV/N0/early",
-        kwargs={
-            "color": USZ_COLORS["green"],
-            "label": "early, N0",
-        }
-    ))
-    plots.append(Histogram(
-        filename=DATA_DIR / "complete-v1-ipsiIV-risks.hdf5",
-        dataname="ipsi/IV/involved-II/early",
-        kwargs={
-            "color": USZ_COLORS["blue"],
-            "label": "early, CT finding in LNL II",
-            "histtype": "step",
-            "alpha": 1.0,
-            "linewidth": 2,
-        }
-    ))
-    plots.append(Histogram(
-        filename=DATA_DIR / "complete-v1-ipsiIV-risks.hdf5",
-        dataname="ipsi/IV/N0/late",
-        kwargs={
-            "color": USZ_COLORS["orange"],
-            "label": "late, N0",
-        }
-    ))
-    plots.append(Histogram(
-        filename=DATA_DIR / "complete-v1-ipsiIV-risks.hdf5",
-        dataname="ipsi/IV/involved-II/late",
-        kwargs={
-            "color": USZ_COLORS["red"],
-            "label": "late, CT finding in LNL II",
-        }
-    ))
-    plots.append(Histogram(
-        filename=DATA_DIR / "complete-v1-ipsiIV-risks.hdf5",
-        dataname="ipsi/IV/involved-IIandIII/late",
-        kwargs={
-            "color": USZ_COLORS["red"],
-            "label": "late, CT finding in LNLs II & III",
-            "histtype": "step",
-            "hatch": "////",
-            "linestyle": "-",
-            "linewidth": 2,
-        }
-    ))
-
-    draw(ax, contents=plots, xlim=(0., 6.))
-
-    ax.legend()
-    ax.set_xlabel("Risk $R$ [%]")
-    ax.set_title(
-        "LNL III",
-        fontweight="bold",
-        fontsize="large",
-    )
-
-    plt.savefig(Path(__file__).with_suffix(".svg"))
+    with h5.File(filename, 'r') as f:
+        # Print all root level object names (aka keys) 
+        # these are the datasets in the file
+        dataset = f['III']
+        scenarios = ['N0', 'II']
+        t_stages = ['early', 'late']
+        
+        for scen in scenarios:  
+            plots = []
+            for stage in t_stages:
+                color = USZ_COLORS["blue"] if stage == "early" else USZ_COLORS["orange"]
+                dataset = f[f'III/{scen}/{stage}']
+                plots.append(Histogram(
+                    filename=filename,
+                    dataname=f'III/{scen}/{stage}',
+                    kwargs={
+                        "color": color,
+                        "label": rf"{stage}, {scen}: {100.*np.mean(dataset):.1f} $\pm$ {100.*np.std(dataset):.1f}%",
+                    }
+                ))
+            draw(axes[scen], contents=plots, xlim=(0., 40.))
+            axes[scen].legend()
+            axes[scen].set_xlabel("Risk $R$ [%]")
+    plt.savefig('thesis_plots/plots/risks/III.png', dpi=300)
