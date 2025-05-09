@@ -21,7 +21,7 @@ USZ_COLORS = {
     #"gray": '#c5d5db',
 }
 SCEN_DICT = {
-    'N0': 'No diagnosis',
+    'N0': 'N0',
     'II': 'II involved',
     'III': 'III involved',
     'IV': 'IV involved',
