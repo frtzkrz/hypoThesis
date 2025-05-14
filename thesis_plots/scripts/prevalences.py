@@ -15,18 +15,18 @@ import lyscripts.plot.histograms as lyhist
 
 # Specify models and respective data source locations
 MODELS = {}
-for tag in ["V_A_prevalences", "V_B_prevalences", "V_D_prevalences", "V_F_prevalences"]:
+for tag in ["VI_VII_A_prevalences", "VI_VII_B_prevalences", "VI_VII_D_prevalences"]:
     MODELS[tag] = Path(f"thesis_plots/graph_results/prevalences/{tag}.hdf5")
 
 modelnames = [name for name in MODELS.keys()]
 
-filename = 'V'
+filename = 'VI_VII_2'
 
 # define USZ colors
 COLORS = {
     "green": '#00afa5',
     "orange": '#f17900',
-    "blue": '#005ea8',
+    #"blue": '#005ea8',
     #"red": '#ae0060',
     # "gray": '#c5d5db',
 }
@@ -38,12 +38,10 @@ HIST_KWARGS = {
     "histtype": "stepfilled",
     "alpha": 0.7,
 }
-['Voverall', 'VnotIII', 'VnotIV']
-SCENARIO_DICT = {
-    "Voverall": "V overall",
-    "VnotIII": "V w/o III",
-    "VnotIV": "V w/o IV",
 
+SCENARIO_DICT = {
+    "VIoverall": "VI overall",
+    "VInotII": "VI w/o II",
 }
 scenario_names = [name for name in SCENARIO_DICT.keys()]
 
@@ -53,11 +51,11 @@ if __name__ == "__main__":
     fig, ax = plt.subplot_mosaic(
         [[f'{modelname}/early', f'{modelname}/late'] for modelname in MODELS.keys()],
         sharex=True, sharey=True,
-        figsize=(6.299212598425196, 3.893209269731271*1.25),
+        figsize=lyhist.get_size(width="full"),
     )
 
     for i, (modelname, filepath) in enumerate(MODELS.items()):
-        ylabel = modelname.split("_")[1]
+        ylabel = modelname.split("_")[2]
         with h5py.File(name=filepath, mode="r") as h5_file:
             for scenario in scenario_names:
                 color = next(COLOR_CYCLE)
@@ -86,7 +84,7 @@ if __name__ == "__main__":
                         color=color,
                     )
 
-                    ax[axname].set_ylim(0., 0.80)
+                    ax[axname].set_ylim(0., 0.6)
                     if stage == "early":
                         ax[axname].set_ylabel(ylabel)
 
