@@ -46,6 +46,7 @@ cd hypoThesis
 ### 2. Start the pipeline
 
 Finally, the pipeline can be launched. If everything works as intended the command below should launch the pipeline. Note that it may take quite some time to finish (something on the order of hours). But during the entire process, it should keep you updated about what's happening.
+The resulting metrics are stored in results/metrics.json and the samples, risks and prevalences are stored as .hdf5 in the results directory as well. The .hdf5 files are used to calculate the risk and prevalences (see below) respectively for the different involvement patterns. 
 
 ```bash
 git checkout <tag-of-interest>
