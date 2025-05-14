@@ -1,0 +1,497 @@
+schema: '2.0'
+stages:
+  join:
+    cmd: "lyscripts data join --inputs data/usz_hypopharynx.csv data/umcg_hypopharynx.csv
+      --output data/joined.csv\n"
+    deps:
+    - path: data/umcg_hypopharynx.csv
+      hash: md5
+      md5: cd8118b585c49966fbd82f8f15c89281
+      size: 74178
+    - path: data/usz_hypopharynx.csv
+      hash: md5
+      md5: a4ed8b94dd6ae0ffca42260917005cd3
+      size: 73583
+    outs:
+    - path: data/joined.csv
+      hash: md5
+      md5: 68bbd04da08e9bddb1761d09dcfe3391
+      size: 183027
+  enhance:
+    cmd: "lyscripts data enhance data/joined.csv data/enhanced.csv --modalities CT
+      MRI PET FNA diagnostic_consensus pathology pCT\n"
+    deps:
+    - path: data/joined.csv
+      hash: md5
+      md5: 68bbd04da08e9bddb1761d09dcfe3391
+      size: 183027
+    params:
+      params.yaml:
+        modalities:
+          CT:
+          - 0.76
+          - 0.81
+          MRI:
+          - 0.63
+          - 0.81
+          PET:
+          - 0.86
+          - 0.79
+          FNA:
+          - 0.98
+          - 0.8
+          diagnostic_consensus:
+          - 0.86
+          - 0.81
+          pathology:
+          - 1.0
+          - 1.0
+          pCT:
+          - 0.86
+          - 0.81
+          max_llh:
+          - 1.0
+          - 1.0
+    outs:
+    - path: data/enhanced.csv
+      hash: md5
+      md5: ce58ed38b233179d31e7e647f0d9edce
+      size: 221916
+  clean:
+    cmd: lyscripts data clean data/enhanced.csv data/cleaned.csv
+    deps:
+    - path: data/enhanced.csv
+      hash: md5
+      md5: ce58ed38b233179d31e7e647f0d9edce
+      size: 221916
+    params:
+      params.yaml:
+        model.class: Unilateral
+    outs:
+    - path: data/cleaned.csv
+      hash: md5
+      md5: 05772e7b84e404dc9d106a049d0adb0e
+      size: 81563
+  sampling:
+    cmd: "lyscripts sample data/cleaned.csv results/samples.hdf5 --plots plots//sampling
+      --pools 0 --modalities max_llh\n"
+    deps:
+    - path: data/cleaned.csv
+      hash: md5
+      md5: 05772e7b84e404dc9d106a049d0adb0e
+      size: 81563
+    params:
+      params.yaml:
+        graph:
+          tumor:
+            primary:
+            - II
+            - III
+          lnl:
+            II:
+            - III
+            III: []
+        modalities:
+          CT:
+          - 0.76
+          - 0.81
+          MRI:
+          - 0.63
+          - 0.81
+          PET:
+          - 0.86
+          - 0.79
+          FNA:
+          - 0.98
+          - 0.8
+          diagnostic_consensus:
+          - 0.86
+          - 0.81
+          pathology:
+          - 1.0
+          - 1.0
+          pCT:
+          - 0.86
+          - 0.81
+          max_llh:
+          - 1.0
+          - 1.0
+        model:
+          first_binom_prob: 0.3
+          max_t: 10
+          t_stages:
+          - early
+          - late
+          class: Unilateral
+          kwargs:
+            base_symmetric: false
+            trans_symmetric: true
+            use_mixing: true
+        sampling:
+          walkers_per_dim: 20
+          burnin: 1000
+          nsteps: 20
+          thin_by: 10
+          temp_schedule:
+          - 0.0
+          - 1.0076210988534706e-09
+          - 3.224387516331105e-08
+          - 2.448519270213932e-07
+          - 1.031804005225953e-06
+          - 3.148815933917096e-06
+          - 7.835261664684588e-06
+          - 1.6935087808430282e-05
+          - 3.3017728167230525e-05
+          - 5.949901826619859e-05
+          - 0.00010076210988534707
+          - 0.0001622783855914503
+          - 0.0002507283732699068
+          - 0.0003741226606566017
+          - 0.000541922809869769
+          - 0.0007651622719418543
+          - 0.0010565673013513768
+          - 0.0014306778705547923
+          - 0.001903968584518355
+          - 0.00249496959524998
+          - 0.0032243875163311063
+          - 0.004115226337448558
+          - 0.00519290833892641
+          - 0.006485395006257844
+          - 0.008023307944637018
+          - 0.009840049793490924
+          - 0.011971925141011254
+          - 0.014458261438686257
+          - 0.01734152991583261
+          - 0.020667466494127266
+          - 0.02448519270213934
+          - 0.02884733658986194
+          - 0.03381015364324406
+          - 0.0394336476987224
+          - 0.045781691857753354
+          - 0.05292214940134466
+          - 0.06092699470458736
+          - 0.06987243415118778
+          - 0.07983902704799936
+          - 0.09091180653955425
+          - 0.1031804005225954
+          - 0.11673915256060852
+          - 0.13168724279835387
+          - 0.14812880887639787
+          - 0.16617306684564512
+          - 0.18593443208187052
+          - 0.207532640200251
+          - 0.231092867969897
+          - 0.2567458542283846
+          - 0.28462802079628763
+          - 0.31488159339170957
+          - 0.34765472254481466
+          - 0.38310160451236014
+          - 0.4213826021922288
+          - 0.46266436603796024
+          - 0.5071199549732823
+          - 0.5549289573066435
+          - 0.6062776116457449
+          - 0.6613589278120725
+          - 0.7203728077554274
+          - 0.7835261664684589
+          - 0.8510330529011965
+          - 0.923114770875582
+          - 1.0
+          kwargs:
+            max_steps: 20000
+            check_interval: 100
+            trust_threshold: 30.0
+            rel_acor_threshold: 0.075
+    outs:
+    - path: plots//sampling/accept_rates.csv
+      hash: md5
+      md5: 7eced563a54a82f955555d45e48057d0
+      size: 160
+    - path: plots//sampling/acor_times.csv
+      hash: md5
+      md5: 8fdd7e0202c5c8b2638c12e587de48bc
+      size: 211
+    - path: results/samples.hdf5
+      hash: md5
+      md5: 18875c3c20e0dd3a8b6da982d26593b7
+      size: 526432
+  predict-risks:
+    cmd: "lyscripts predict risks results/samples.hdf5 results/risks.hdf5\n"
+    deps:
+    - path: results/samples.hdf5
+      hash: md5
+      md5: 18875c3c20e0dd3a8b6da982d26593b7
+      size: 526432
+    params:
+      params.yaml:
+        graph:
+          tumor:
+            primary:
+            - II
+            - III
+          lnl:
+            II:
+            - III
+            III: []
+        model:
+          first_binom_prob: 0.3
+          max_t: 10
+          t_stages:
+          - early
+          - late
+          class: Unilateral
+          kwargs:
+            base_symmetric: false
+            trans_symmetric: true
+            use_mixing: true
+        risks:
+        - name: II/N0/early
+          involvement:
+            ipsi:
+              II: true
+          given_diagnosis:
+            ipsi:
+              II: false
+            contra:
+              II: false
+          given_diagnosis_spsn:
+          - 0.76
+          - 0.81
+          t_stage: early
+        - name: II/N0/late
+          involvement:
+            ipsi:
+              II: true
+          given_diagnosis:
+            ipsi:
+              II: false
+            contra:
+              II: false
+          given_diagnosis_spsn:
+          - 0.76
+          - 0.81
+          t_stage: late
+    outs:
+    - path: results/risks.hdf5
+      hash: md5
+      md5: 805242cbf50a319eb4c3aa787e1ecaa9
+      size: 35208
+  evaluate:
+    cmd: "lyscripts evaluate data/cleaned.csv results/samples.hdf5 --metrics results/metrics.json\n"
+    deps:
+    - path: data/cleaned.csv
+      hash: md5
+      md5: 05772e7b84e404dc9d106a049d0adb0e
+      size: 81563
+    - path: results/samples.hdf5
+      hash: md5
+      md5: 18875c3c20e0dd3a8b6da982d26593b7
+      size: 526432
+    params:
+      params.yaml:
+        graph:
+          tumor:
+            primary:
+            - II
+            - III
+          lnl:
+            II:
+            - III
+            III: []
+        modalities:
+          CT:
+          - 0.76
+          - 0.81
+          MRI:
+          - 0.63
+          - 0.81
+          PET:
+          - 0.86
+          - 0.79
+          FNA:
+          - 0.98
+          - 0.8
+          diagnostic_consensus:
+          - 0.86
+          - 0.81
+          pathology:
+          - 1.0
+          - 1.0
+          pCT:
+          - 0.86
+          - 0.81
+          max_llh:
+          - 1.0
+          - 1.0
+        model:
+          first_binom_prob: 0.3
+          max_t: 10
+          t_stages:
+          - early
+          - late
+          class: Unilateral
+          kwargs:
+            base_symmetric: false
+            trans_symmetric: true
+            use_mixing: true
+        sampling:
+          walkers_per_dim: 20
+          burnin: 1000
+          nsteps: 20
+          thin_by: 10
+          temp_schedule:
+          - 0.0
+          - 1.0076210988534706e-09
+          - 3.224387516331105e-08
+          - 2.448519270213932e-07
+          - 1.031804005225953e-06
+          - 3.148815933917096e-06
+          - 7.835261664684588e-06
+          - 1.6935087808430282e-05
+          - 3.3017728167230525e-05
+          - 5.949901826619859e-05
+          - 0.00010076210988534707
+          - 0.0001622783855914503
+          - 0.0002507283732699068
+          - 0.0003741226606566017
+          - 0.000541922809869769
+          - 0.0007651622719418543
+          - 0.0010565673013513768
+          - 0.0014306778705547923
+          - 0.001903968584518355
+          - 0.00249496959524998
+          - 0.0032243875163311063
+          - 0.004115226337448558
+          - 0.00519290833892641
+          - 0.006485395006257844
+          - 0.008023307944637018
+          - 0.009840049793490924
+          - 0.011971925141011254
+          - 0.014458261438686257
+          - 0.01734152991583261
+          - 0.020667466494127266
+          - 0.02448519270213934
+          - 0.02884733658986194
+          - 0.03381015364324406
+          - 0.0394336476987224
+          - 0.045781691857753354
+          - 0.05292214940134466
+          - 0.06092699470458736
+          - 0.06987243415118778
+          - 0.07983902704799936
+          - 0.09091180653955425
+          - 0.1031804005225954
+          - 0.11673915256060852
+          - 0.13168724279835387
+          - 0.14812880887639787
+          - 0.16617306684564512
+          - 0.18593443208187052
+          - 0.207532640200251
+          - 0.231092867969897
+          - 0.2567458542283846
+          - 0.28462802079628763
+          - 0.31488159339170957
+          - 0.34765472254481466
+          - 0.38310160451236014
+          - 0.4213826021922288
+          - 0.46266436603796024
+          - 0.5071199549732823
+          - 0.5549289573066435
+          - 0.6062776116457449
+          - 0.6613589278120725
+          - 0.7203728077554274
+          - 0.7835261664684589
+          - 0.8510330529011965
+          - 0.923114770875582
+          - 1.0
+          kwargs:
+            max_steps: 20000
+            check_interval: 100
+            trust_threshold: 30.0
+            rel_acor_threshold: 0.075
+    outs:
+    - path: results/metrics.json
+      hash: md5
+      md5: b3c38b7e8e6f607186062b374ebdcfa7
+      size: 91
+  predict-prevalences:
+    cmd: "lyscripts predict prevalences results/samples.hdf5 data/cleaned.csv results/prevalences.hdf5\n"
+    deps:
+    - path: data/cleaned.csv
+      hash: md5
+      md5: 05772e7b84e404dc9d106a049d0adb0e
+      size: 81563
+    - path: results/samples.hdf5
+      hash: md5
+      md5: 18875c3c20e0dd3a8b6da982d26593b7
+      size: 526432
+    params:
+      params.yaml:
+        graph:
+          tumor:
+            primary:
+            - II
+            - III
+          lnl:
+            II:
+            - III
+            III: []
+        model:
+          first_binom_prob: 0.3
+          max_t: 10
+          t_stages:
+          - early
+          - late
+          class: Unilateral
+          kwargs:
+            base_symmetric: false
+            trans_symmetric: true
+            use_mixing: true
+        prevalences:
+        - name: healthy/early
+          pattern:
+            ipsi:
+              II: false
+          t_stage: early
+        - name: healthy/late
+          pattern:
+            ipsi:
+              II: false
+          t_stage: late
+    outs:
+    - path: results/prevalences.hdf5
+      hash: md5
+      md5: 75cb1c47a35a6caaa3e6238ec8d38462
+      size: 34176
+  plot-corner:
+    cmd: "lyscripts plot corner results/samples.hdf5 plots//corner.png\n"
+    deps:
+    - path: results/samples.hdf5
+      hash: md5
+      md5: 18875c3c20e0dd3a8b6da982d26593b7
+      size: 526432
+    outs:
+    - path: plots//corner.png
+      hash: md5
+      md5: 4d4a3f419f3131a80321cba20e0a3f2d
+      size: 150921
+    - path: plots//corner.svg
+      hash: md5
+      md5: 3e4873afabd1a2c69d1d045055d421e0
+      size: 555344
+  filter:
+    cmd: "python scripts/filter.py --input data/enhanced.csv --output data/filtered.csv\n"
+    deps:
+    - path: data/enhanced.csv
+      hash: md5
+      md5: ce58ed38b233179d31e7e647f0d9edce
+      size: 221916
+    - path: scripts/filter.py
+      hash: md5
+      md5: f512d1482a7a03f178b554b3837376a3
+      size: 1850
+    outs:
+    - path: data/filtered.csv
+      hash: md5
+      md5: 2305c3e0c0ec642cbf97039b0725fb75
+      size: 5153
