@@ -97,4 +97,6 @@ if __name__ == "__main__":
     ax[f"{modelnames[-1]}/early"].set_xlabel("early T-category prevalences [%]")
     ax[f"{modelnames[-1]}/late"].set_xlabel("late T-category prevalences [%]")
 
-    plt.savefig(f"thesis_plots/plots/prevalences/{filename}.png", dpi=300)
+    path = Path(f"thesis_plots/plots/prevalences")
+    path.mkdir(parents=True, exist_ok=True)
+    plt.savefig(f"{path}/{filename}.png", dpi=300)
