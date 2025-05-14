@@ -61,4 +61,6 @@ if __name__ == "__main__":
             draw(axes[scen], contents=plots, xlim=(.5, 13.5))
             axes[scen].legend()
             axes[scen].set_xlabel("Risk $R$ [%]")
-    plt.savefig(f'thesis_plots/plots/risks/{LNL}.png', dpi=300)
+    path = Path(f"thesis_plots/plots/risks")
+    path.mkdir(parents=True, exist_ok=True)
+    plt.savefig(f"{path}/IV.png", dpi=300)
