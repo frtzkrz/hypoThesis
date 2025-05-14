@@ -11,7 +11,7 @@ import h5py as h5
 
 from _utils import Histogram, Posterior, draw
 
-LNL = 'IV'
+
 filename = Path("thesis_plots/graph_results/risks/risks.hdf5")
 USZ_COLORS = {
     "blue": '#005ea8',
@@ -20,20 +20,18 @@ USZ_COLORS = {
     #"red": '#ae0060',
     #"gray": '#c5d5db',
 }
+
 SCEN_DICT = {
     'N0': 'N0',
     'II': 'II involved',
-    'III': 'III involved',
-    'II_III': 'II & III involved',
 }
 
 if __name__ == "__main__":
     plt.style.use(Path(".mplstyle"))
 
     fig, axes = plt.subplot_mosaic(
-        [['N0', 'II'],
-         ['III', 'II_III']],
-        figsize=lyhist.get_size(width="full", ratio=2),
+        [['N0', 'II']],
+        figsize=lyhist.get_size(width="full", ratio=4),
         sharey=True,
         layout="constrained",
         )
@@ -41,26 +39,26 @@ if __name__ == "__main__":
     with h5.File(filename, 'r') as f:
         # Print all root level object names (aka keys) 
         # these are the datasets in the file
-        dataset = f[LNL]
-        scenarios = ['N0', 'II', 'III', 'II_III']
+        dataset = f['III']
+        scenarios = ['N0', 'II']
         t_stages = ['early', 'late']
         
         for scen in scenarios:  
             plots = []
             for stage in t_stages:
                 color = USZ_COLORS["blue"] if stage == "early" else USZ_COLORS["orange"]
-                dataset = f[f'{LNL}/{scen}/{stage}']
+                dataset = f[f'III/{scen}/{stage}']
                 plots.append(Histogram(
                     filename=filename,
-                    dataname=f'{LNL}/{scen}/{stage}',
+                    dataname=f'III/{scen}/{stage}',
                     kwargs={
                         "color": color,
                         "label": rf"{SCEN_DICT[scen]}, {stage}: {100.*np.mean(dataset):.1f} $\pm$ {100.*np.std(dataset):.1f}%",
                     }
                 ))
-            draw(axes[scen], contents=plots, xlim=(.5, 13.5))
+            draw(axes[scen], contents=plots, xlim=(0., 40.))
             axes[scen].legend()
             axes[scen].set_xlabel("Risk $R$ [%]")
     path = Path(f"thesis_plots/plots/risks")
     path.mkdir(parents=True, exist_ok=True)
-    plt.savefig(f"{path}/IV.png", dpi=300)
+    plt.savefig(f"{path}/III.png", dpi=300)
