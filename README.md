@@ -47,6 +47,8 @@ cd hypoThesis
 
 Finally, the pipeline can be launched. If everything works as intended the command below should launch the pipeline. Note that it may take quite some time to finish (something on the order of hours). But during the entire process, it should keep you updated about what's happening.
 The resulting metrics are stored in results/metrics.json and the samples, risks and prevalences are stored as .hdf5 in the results directory as well. The .hdf5 files are used to calculate the risk and prevalences (see below) respectively for the different involvement patterns. 
+If thermodynamical integration should be performed to get the model evidence, in pipeline/dvc.yaml at stages:sampling_cmd the additional option "--ti" has to be added. This however extends the runtime by a lot.
+Otherwise, the Bayesian Information Criterion is computed.
 
 ```bash
 git checkout <tag-of-interest>
