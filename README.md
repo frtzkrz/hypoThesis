@@ -76,6 +76,7 @@ dvc repro pipeline/dvc.yaml
 | VI_VII_B |
 | VI_VII_C |
 | VI_VII_D |
+| VI_VII_E |
 
 ### 3. Recreate Prevalence Plots
 
